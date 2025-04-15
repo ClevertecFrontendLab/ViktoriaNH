@@ -9,7 +9,7 @@ export const Navigation: React.FC = () => (
         flexDirection='column'
         pt='24px'
         boxShadow='0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12)'
-        h='100%'
+        minH='100%'
         zIndex={99}
         position='fixed'
         top='0'
@@ -39,9 +39,6 @@ export const Navigation: React.FC = () => (
             flexDirection='column'
             gap='16px'
             height='144px'
-            // position='absolute'
-            bottom='0px'
-            right='0px'
             alignItems='flex-start'
         >
             <Box w='208px'>

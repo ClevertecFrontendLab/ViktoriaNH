@@ -8,7 +8,7 @@ import { BestRecipesPage } from './pages/best-recipes-page/best-recipe-page';
 import { HomePage } from './pages/home-page/home-page';
 import { VeganCuisinePage } from './pages/vegan-cuisine-page/vegan-cuisine-page';
 
-const Root = () => (
+export const Root = () => (
     <ChakraProvider>
         <BrowserRouter>
             <ScrollToTop />

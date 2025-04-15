@@ -19,7 +19,7 @@ export const HomePage = () => (
             maxW='1920px'
             zIndex='999'
         >
-            <Header />
+            <Header data-test-id='header' />
         </Box>
 
         <Box w='100%' maxW='1920px' mx='auto'>
