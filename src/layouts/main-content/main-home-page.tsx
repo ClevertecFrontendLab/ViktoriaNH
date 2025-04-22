@@ -8,6 +8,7 @@ import { VeganCusine } from '~/pages/home-page/sections/vegan-cuisine/vegan-cusi
 
 export const MainContent = () => (
     <Box
+        as='main'
         mx='auto'
         h='100%'
         w='100%'

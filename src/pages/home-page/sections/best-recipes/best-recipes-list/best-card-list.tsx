@@ -1,10 +1,15 @@
 import { Box } from '@chakra-ui/react';
 
-import { bestRecipes } from '../../../../../data/best-recipes';
+import { recipes } from '~/data/recipes';
+
 import { BestCard } from './components/best-card';
 import { BestCardSmall } from './components/best-small-card';
 
-export const BestCardList: React.FC = () => (
+interface BestCardListProps {
+    limit?: number;
+}
+
+export const BestCardList: React.FC<BestCardListProps> = ({ limit = 2 }) => (
     <Box
         display='grid'
         gridTemplateColumns={{
@@ -22,7 +27,7 @@ export const BestCardList: React.FC = () => (
         }}
         width='100%'
     >
-        {bestRecipes.map((recipe) => (
+        {recipes.slice(0, limit).map((recipe) => (
             <Box
                 key={recipe.id}
                 display={{
@@ -35,7 +40,7 @@ export const BestCardList: React.FC = () => (
             </Box>
         ))}
 
-        {bestRecipes.map((recipe) => (
+        {recipes.slice(0, limit).map((recipe) => (
             <Box
                 key={recipe.id}
                 display={{

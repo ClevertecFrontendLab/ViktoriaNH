@@ -5,30 +5,30 @@ import {
     CardBody,
     CardFooter,
     Heading,
-    HStack,
-    Icon,
     Image,
-    Tag,
     Text,
+    VStack,
 } from '@chakra-ui/react';
 
+import { RecipeStats } from '~/components/recipe-stats/recipe-stats';
+import { getCategoryList } from '~/utils/normilize';
+import { renderCategoryTags } from '~/utils/render-category-tags';
+
 import { BookmarkIcon } from '../../../../../../components/icons/bookmark-icon';
-import { LikeIcon } from '../../../../../../components/icons/like-icon';
-import { menuItems } from '../../../../../../data/menu-items';
-import { Recipe } from '../../../../../../data/new-recipes';
+import { Recipe } from '../../../../../../types/recipe-types';
 
 interface RecipeCardProps {
     data: Recipe;
 }
 
 export const BestCard: React.FC<RecipeCardProps> = ({ data }) => {
-    const currentCategory = menuItems.find((item) => item.title === data.category);
+    const categoryList = getCategoryList(data.category);
 
     return (
         <Card
             borderRadius='lg'
-            overflow='hidden'
-            w='100%'
+            // overflow='hidden'
+            maxW='100%'
             h='244px'
             direction='row'
             variant='outline'
@@ -41,33 +41,17 @@ export const BestCard: React.FC<RecipeCardProps> = ({ data }) => {
                 display='flex'
                 flexDirection='column'
                 justifyContent='space-between'
-                px='24px'
-                py='20px'
+                px='15px'
+                py='10px'
                 flex='1'
-                gap='24px'
+                gap='15px'
             >
                 <Box display='flex' justifyContent='space-between' w='100%'>
-                    <Tag bg='lime.50' borderRadius='4px' px={2} py={1}>
-                        <HStack spacing={1}>
-                            <Image src={currentCategory?.icon} boxSize='16px' alt={data.category} />
-                            <Text textStyle='mainText'>{data.category}</Text>
-                        </HStack>
-                    </Tag>
+                    <VStack spacing='4px' align='flex-start'>
+                        {renderCategoryTags(categoryList, 2, 'lime.50')}
+                    </VStack>
 
-                    <HStack spacing='8px'>
-                        {data.bookmarks !== undefined && (
-                            <HStack spacing={1}>
-                                <Icon as={BookmarkIcon} w={3} h={3} />
-                                <Text textStyle='numbers'>{data.bookmarks}</Text>
-                            </HStack>
-                        )}
-                        {data.likes !== undefined && (
-                            <HStack spacing={1}>
-                                <Icon as={LikeIcon} w={3} h={3} />
-                                <Text textStyle='numbers'>{data.likes}</Text>
-                            </HStack>
-                        )}
-                    </HStack>
+                    <RecipeStats bookmarks={data.bookmarks} likes={data.likes} />
                 </Box>
 
                 <CardBody p={0}>

@@ -1,103 +1,155 @@
 import {
+    Box,
     Card,
     CardBody,
     CardFooter,
     Heading,
     HStack,
-    Icon,
     Image,
-    Tag,
     Text,
+    VStack,
 } from '@chakra-ui/react';
-import React from 'react';
+import { useNavigate } from 'react-router';
 
-import { BookmarkIcon } from '../../../../../../components/icons/bookmark-icon';
-import { LikeIcon } from '../../../../../../components/icons/like-icon';
-import { menuItems } from '../../../../../../data/menu-items';
-import { Recipe } from '../../../../../../data/new-recipes';
+import { RecipeStats } from '~/components/recipe-stats/recipe-stats';
+import { useIsMobile } from '~/hooks/use-is-mobile';
+import { renderCategoryTags } from '~/utils/render-category-tags';
 
-interface RecipeCardProps {
+import { recipes } from '../../../../../../data/recipes';
+import { Recipe } from '../../../../../../types/recipe-types';
+import { getCategoryList } from '../../../../../../utils/normilize';
+
+interface NewRecipeCardProps {
     data: Recipe;
+    onClick?: () => void;
 }
 
-export const NewRecipeCard: React.FC<RecipeCardProps> = ({ data }) => {
-    const currentCategory = menuItems.find((item) => item.title === data.category);
+export const NewRecipeCard: React.FC<NewRecipeCardProps> = ({ data, onClick }) => {
+    const categoryList = getCategoryList(data.category);
+    const isMobile = useIsMobile();
+    const navigate = useNavigate();
+
+    const handleCardClick = (recipeId: string | number) => {
+        const recipe = recipes.find((r) => r.id === recipeId);
+        if (!recipe) return;
+
+        const category = Array.isArray(recipe.category) ? recipe.category[0] : recipe.category;
+        const subcategory = Array.isArray(recipe.subcategory)
+            ? recipe.subcategory[0]
+            : recipe.subcategory;
+        const path = `/${category}/${subcategory}/${recipe.id}`;
+
+        navigate(path);
+    };
 
     return (
         <Card
+            onClick={onClick || (() => handleCardClick(data.id))}
             flex='0 0 auto'
-            width='322px'
-            minW='322px'
-            borderRadius='lg'
+            bg='white'
+            maxW={{ base: '158px', lg: '322px' }}
+            h={{ base: '220px', lg: '414px' }}
+            minW={{ base: '158px', lg: undefined }}
+            borderRadius='8px'
+            border='1px solid blackAlpha.200'
+            display='flex'
+            flexDirection='column'
+            alignItems='flex-start'
+            alignSelf='stretch'
             overflow='hidden'
-            h='414px'
-            direction='column'
-            variant='outline'
             position='relative'
+            variant='outline'
         >
-            <Heading p={0}>
-                <Image src={data.image} alt={data.title} h='230px' w='100%' objectFit='cover' />
-            </Heading>
+            {/* Картинка */}
+            <Box position='relative' w='full'>
+                <Image
+                    src={data.image}
+                    alt={data.title}
+                    h={{ base: '128px', lg: '230px' }}
+                    maxW={{ base: '158px', lg: '322px' }}
+                    objectFit='cover'
+                    loading='lazy'
+                />
 
-            <CardBody>
+                {/* Теги на изображении */}
+                {isMobile && (
+                    <Box position='absolute' top='8px' left='8px'>
+                        <VStack spacing='4px' align='flex-start'>
+                            {renderCategoryTags(categoryList, 3)}
+                        </VStack>
+                    </Box>
+                )}
+            </Box>
+
+            <CardBody
+                padding={{
+                    base: '8px 8px 4px 8px',
+                    lg: '16px 24px 20px',
+                }}
+                w='full'
+                flex='1'
+                display='flex'
+                flexDirection='column'
+                alignItems='flex-start'
+                gap={{ base: '8px', lg: '12px' }}
+            >
                 <Heading
                     as='h2'
-                    fontFamily='"Inter", sans-serif'
-                    fontSize='20px'
+                    fontSize={{ base: '16px', lg: '20px' }}
                     fontWeight='500'
-                    lineHeight='140%'
-                    mb={2}
-                    overflow='hidden'
-                    textOverflow='ellipsis'
-                    whiteSpace='nowrap'
+                    lineHeight='150%'
+                    noOfLines={{ base: 2, lg: 1 }}
+                    maxW='100%'
                 >
                     {data.title}
                 </Heading>
-                <Text
-                    textStyle='mainText'
-                    style={{
-                        display: '-webkit-box',
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden',
-                        WebkitLineClamp: 3,
-                        maxWidth: '100%',
-                        whiteSpace: 'normal',
-                    }}
-                >
-                    {data.description}
-                </Text>
+
+                {/* description скрывается на мобилке */}
+                {!isMobile && (
+                    <Text
+                        textStyle='mainText'
+                        sx={{
+                            display: '-webkit-box',
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                            WebkitLineClamp: 3,
+                            maxWidth: '100%',
+                            whiteSpace: 'normal',
+                        }}
+                    >
+                        {data.description}
+                    </Text>
+                )}
+
+                {/* Иконки внизу на мобилке */}
+                {isMobile && (
+                    <Box
+                        display='flex'
+                        alignItems='center'
+                        gap='4px'
+                        mt='auto'
+                        w='100%'
+                        justifyContent='space-between'
+                    >
+                        <RecipeStats bookmarks={data.bookmarks} likes={data.likes} />
+                    </Box>
+                )}
             </CardBody>
 
-            <CardFooter
-                p={0}
-                display='flex'
-                justifyContent='space-between'
-                alignItems='center'
-                mx={6}
-                mb={5}
-            >
-                <Tag bg='lime.150' borderRadius='4px' px={2} py={1}>
-                    <HStack spacing={1}>
-                        <Image src={currentCategory?.icon} boxSize='16px' alt={data.category} />
-                        <Text textStyle='mainText'>{data.category}</Text>
-                    </HStack>
-                </Tag>
-
-                <HStack spacing='8px' alignItems='center'>
-                    {data.bookmarks !== undefined && (
-                        <HStack spacing={1} fontStyle='numbers'>
-                            <Icon as={BookmarkIcon} w={3} h={3} />
-                            <Text textStyle='numbers'>{data.bookmarks}</Text>
-                        </HStack>
-                    )}
-                    {data.likes !== undefined && (
-                        <HStack spacing={1}>
-                            <Icon as={LikeIcon} w={3} h={3} />
-                            <Text textStyle='numbers'>{data.likes}</Text>
-                        </HStack>
-                    )}
-                </HStack>
-            </CardFooter>
+            {/* Footer (только для больших экранов) */}
+            {!isMobile && (
+                <CardFooter
+                    display='flex'
+                    justifyContent='space-between'
+                    px={{ lg: '12px', xl: '24px' }}
+                    pb={{ lg: '12px', xl: '20px' }}
+                    pt={0}
+                    w='100%'
+                >
+                    <HStack spacing={2}>{renderCategoryTags(categoryList, 1)}</HStack>
+                    <RecipeStats bookmarks={data.bookmarks} likes={data.likes} />
+                </CardFooter>
+            )}
         </Card>
     );
 };

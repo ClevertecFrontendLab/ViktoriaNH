@@ -1,51 +1,70 @@
 import { Box } from '@chakra-ui/react';
+import { useState } from 'react';
+import { useParams } from 'react-router';
 
-import { RecipeTabs } from '~/components/tabs/recipe-tabs';
-import { DessertsList } from '~/pages/vegan-cuisine-page/sections/vegan-cuisine/desserts/desserts-list';
-import { VeganRecipes } from '~/pages/vegan-cuisine-page/sections/vegan-cuisine/recipe-collection/vegan-recipes';
-import { VeganCuisineSearchBlock } from '~/pages/vegan-cuisine-page/sections/vegan-cuisine/search-block/vegan-cuisine-search-block';
+import { subcategoriesLabels } from '~/constants/subcategory-labels';
+import { menuItems } from '~/data/menu-items';
+import { recipes } from '~/data/recipes';
+import { DessertsList } from '~/pages/vegan-cuisine-page/sections/desserts/desserts-list';
+import { VeganRecipes } from '~/pages/vegan-cuisine-page/sections/recipe-collection/vegan-recipes';
+import { VeganCuisineSearchBlock } from '~/pages/vegan-cuisine-page/sections/search-block/vegan-cuisine-search-block';
+import { getCategoryList, getSubcategoryList } from '~/utils/normilize';
 
-export const MainContentVeganCuisinePage = () => (
-    <Box
-        mx='auto'
-        h='100%'
-        w='100%'
-        maxW={{ base: '100%', lg: '100%', xl: '1360px' }}
-        px={{ base: 4, md: 6, lg: 0 }}
-    >
+import { RecipeTabs } from '../../components/tabs/recipe-tabs';
+
+const normalize = (str: string) => str?.toLowerCase();
+
+const formatSubcategory = (subcategory: string): string =>
+    subcategoriesLabels[subcategory.toLowerCase()] || subcategory;
+
+export const MainContentVeganCuisinePage = () => {
+    const { subcategory } = useParams<{ subcategory?: string }>();
+    const veganSubcategories =
+        menuItems.find((item) => item.title === 'Веганская кухня')?.text.map(normalize) ?? [];
+
+    const veganRecipes = recipes.filter((recipe) => {
+        const categories = getCategoryList(recipe.category);
+        const subcategories = getSubcategoryList(recipe.subcategory);
+
+        const isExplicitlyVegan = categories.includes('vegan');
+
+        const hasVeganSubcategory = subcategories.some((subcat) =>
+            veganSubcategories.includes(normalize(formatSubcategory(subcat))),
+        );
+
+        return isExplicitlyVegan || hasVeganSubcategory;
+    });
+
+    const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(
+        subcategory ?? null,
+    );
+
+    return (
         <Box
+            as='main'
             display='flex'
             flexDirection='column'
             mt='80px'
             flex='1'
+            maxW={{ base: '100%', lg: '100%', xl: '1360px' }}
+            px={{ base: 4, md: 6, lg: 0 }}
             mx='auto'
-            w='100%'
-            maxW='1360px'
-            minW='0'
         >
-            <Box mb={{ base: '32px', lg: '0px', xl: '0px' }}>
-                <VeganCuisineSearchBlock />
-            </Box>
+            <VeganCuisineSearchBlock />
 
-            <Box
-                display='flex'
-                flexDirection='column'
-                alignItems='center'
-                alignSelf='stretch'
-                paddingBottom='12px'
-                mb='12px'
-            >
-                <RecipeTabs />
-            </Box>
-            <Box w='100%' mb='40px'>
-                <VeganRecipes />
-            </Box>
+            <RecipeTabs
+                recipes={veganRecipes}
+                initialSubcategory={selectedSubcategory}
+                onSubcategoryChange={setSelectedSubcategory}
+            />
 
-            <Box w='100%'>
-                <DessertsList />
-            </Box>
+            <VeganRecipes recipes={veganRecipes} selectedSubcategory={selectedSubcategory} />
 
-            <Box h={{ base: '102px' }} display={{ base: 'block', xl: 'none', lg: 'none' }}></Box>
+            <DessertsList />
+
+            <Box h={{ base: '102px' }} display={{ base: 'block', xl: 'none', lg: 'none' }} />
         </Box>
-    </Box>
-);
+    );
+};
+
+// Код выше - начальное  состояние

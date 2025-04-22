@@ -1,3 +1,5 @@
+import 'swiper/css';
+
 import { Box, ChakraProvider } from '@chakra-ui/react';
 import { Outlet } from 'react-router';
 

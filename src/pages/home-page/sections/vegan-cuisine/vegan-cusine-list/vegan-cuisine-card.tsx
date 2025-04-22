@@ -1,38 +1,23 @@
-import {
-    Card,
-    CardBody,
-    CardFooter,
-    Heading,
-    HStack,
-    Icon,
-    Image,
-    Tag,
-    Text,
-} from '@chakra-ui/react';
+import { Card, CardBody, CardFooter, Heading, HStack, Text } from '@chakra-ui/react';
 
-import { BookmarkIcon } from '../../../../../components/icons/bookmark-icon';
-import { LikeIcon } from '../../../../../components/icons/like-icon';
-import { menuItems } from '../../../../../data/menu-items';
+import { RecipeStats } from '~/components/recipe-stats/recipe-stats';
+import { Recipe } from '~/data/recipes';
+import { getCategoryList } from '~/utils/normilize';
+import { renderCategoryTags } from '~/utils/render-category-tags';
 
 export interface VeganCuisineCardProps {
-    data: {
-        id: number;
-        title: string;
-        description: string;
-        category: string;
-        bookmarks?: number;
-        likes?: number;
-    };
+    data: Recipe;
 }
 
 export const VeganCuisineCard: React.FC<VeganCuisineCardProps> = ({ data }) => {
-    const currentCategory = menuItems.find((item) => item.title === data.category);
+    const categoryList = getCategoryList(data.category);
 
     return (
         <Card
             borderRadius='8px'
             overflow='hidden'
             w='100%'
+            maxH='322px'
             maxW={{
                 sm: '328px',
                 md: '232px',
@@ -84,27 +69,8 @@ export const VeganCuisineCard: React.FC<VeganCuisineCardProps> = ({ data }) => {
                 alignItems='center'
                 mt='24px'
             >
-                <Tag bg='lime.50' borderRadius='4px' px='8px' py='2px'>
-                    <HStack spacing={2}>
-                        <Image src={currentCategory?.icon} boxSize='16px' alt={data.category} />
-                        <Text textStyle='mainText'>{data.category}</Text>
-                    </HStack>
-                </Tag>
-
-                <HStack spacing={{ lg: '8px', md: '1px' }}>
-                    {data.bookmarks !== undefined && (
-                        <HStack width='32px' spacing='4px'>
-                            <Icon as={BookmarkIcon} w={3} h={3} />
-                            <Text textStyle='numbers'>{data.bookmarks}</Text>
-                        </HStack>
-                    )}
-                    {data.likes !== undefined && (
-                        <HStack width='32px' spacing='4px'>
-                            <Icon as={LikeIcon} w={3} h={3} />
-                            <Text textStyle='numbers'>{data.likes}</Text>
-                        </HStack>
-                    )}
-                </HStack>
+                <HStack spacing={2}>{renderCategoryTags(categoryList, 1)}</HStack>
+                <RecipeStats bookmarks={data.bookmarks} likes={data.likes} />
             </CardFooter>
         </Card>
     );

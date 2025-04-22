@@ -179,4 +179,12 @@ export const theme = extendTheme({
             },
         },
     },
+
+    styles: {
+        global: {
+            ':root': {
+                '--chakra-transition': 'all 0.2s ease-in-out',
+            },
+        },
+    }, //   используем таким образом transition="var(--chakra-transition)"
 });

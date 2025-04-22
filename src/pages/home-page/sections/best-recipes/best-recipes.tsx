@@ -51,7 +51,7 @@ export const BestRecipes: React.FC = () => (
             </Button>
         </Box>
 
-        <BestCardList />
+        <BestCardList limit={4} />
         <MobileButton />
     </Box>
 );

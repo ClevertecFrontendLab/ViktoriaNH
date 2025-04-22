@@ -1,11 +1,6 @@
-export interface MenuItem {
-    value: string;
-    title: string;
-    text: string[];
-    icon: string;
-}
+import { MenuCategory } from '~/types/menu-category';
 
-export const menuItems = [
+export const menuItems: MenuCategory[] = [
     {
         value: 'a',
         title: 'Салаты',

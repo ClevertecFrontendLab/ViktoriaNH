@@ -6,6 +6,7 @@ import { App } from './app/app';
 import { ScrollToTop } from './components/scroll-to-top';
 import { BestRecipesPage } from './pages/best-recipes-page/best-recipe-page';
 import { HomePage } from './pages/home-page/home-page';
+import { RecipeDetailsPage } from './pages/recipe-pages/recipe-details-page';
 import { VeganCuisinePage } from './pages/vegan-cuisine-page/vegan-cuisine-page';
 
 export const Root = () => (
@@ -16,7 +17,12 @@ export const Root = () => (
                 <Route path='/' element={<App />}>
                     <Route index element={<HomePage />} handle={{ breadcrumb: 'Главная' }} />
                     <Route
-                        path='vegan-cuisine'
+                        path='/vegan-cuisine/:subcategory'
+                        element={<VeganCuisinePage />}
+                        handle={{ breadcrumb: 'Веганская кухня' }}
+                    />
+                    <Route
+                        path='/vegan-cuisine'
                         element={<VeganCuisinePage />}
                         handle={{ breadcrumb: 'Веганская кухня' }}
                     />
@@ -25,6 +31,9 @@ export const Root = () => (
                         element={<BestRecipesPage />}
                         handle={{ breadcrumb: 'Самое сочное' }}
                     />
+
+                    {/* Динамический путь для страницы рецепта */}
+                    <Route path='/:category/:subcategory/:id' element={<RecipeDetailsPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>
