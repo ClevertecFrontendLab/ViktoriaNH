@@ -1,14 +1,16 @@
 import { Box, Grid, GridItem } from '@chakra-ui/react';
 import { useParams } from 'react-router';
 
-import { RecipeDetailsCard } from '~/components/cards/recipe-details-card';
 import { Footer } from '~/components/footer/footer';
 import { Header } from '~/components/header/header';
 import { Navigation } from '~/components/navigation/navigation';
 import { Sidebar } from '~/components/sidebar/sidebar';
 import { recipes } from '~/data/recipes';
+import { useBurgerMenu } from '~/hooks/use-burger-menu';
+import { MainRecipeDetailsPage } from '~/layouts/main-content/main-recipe-datails-page';
 
 export const RecipeDetailsPage = () => {
+    const { isMenuOpen, toggleMenu } = useBurgerMenu();
     const { id } = useParams();
 
     const recipe = recipes.find((r) => String(r.id) === String(id));
@@ -22,11 +24,10 @@ export const RecipeDetailsPage = () => {
                 top='0'
                 left='50%'
                 transform='translateX(-50%)'
-                w='100%'
-                maxW='1920px'
+                w='100vw'
                 zIndex='999'
             >
-                <Header />
+                <Header isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
             </Box>
 
             <Box w='100%' maxW='1920px' mx='auto'>
@@ -44,7 +45,7 @@ export const RecipeDetailsPage = () => {
                         colStart={1}
                         w='256px'
                     >
-                        <Navigation />
+                        <Navigation isMenuOpen={isMenuOpen} />
                     </GridItem>
 
                     <GridItem colStart={{ base: 1, lg: 3 }} rowStart={1} minW={0}>
@@ -57,10 +58,9 @@ export const RecipeDetailsPage = () => {
                             px={{ base: '0px', lg: '0px' }}
                             display='flex'
                             flexDirection='column'
-                            bg='pink.150'
                             gap={{ base: '24px', lg: '40px' }}
                         >
-                            <RecipeDetailsCard data={recipe} />
+                            <MainRecipeDetailsPage />
                         </Box>
                     </GridItem>
 

@@ -5,17 +5,15 @@ import { useLocation, useNavigate } from 'react-router';
 import { subcategoriesLabels } from '~/constants/subcategory-labels';
 import { menuItems } from '~/data/menu-items';
 import { Recipe } from '~/types/recipe-types';
+import { createDictionary } from '~/utils/create-dictionary';
+
+const reverseSubcategoriesLabels = createDictionary(subcategoriesLabels);
 
 interface RecipeTabsProps {
     recipes: Recipe[];
     initialSubcategory: string | null;
     onSubcategoryChange: (subcategory: string | null) => void;
 }
-
-// Инвертируем словарь для перевода с русского на английский
-const reverseSubcategoriesLabels: Record<string, string> = Object.fromEntries(
-    Object.entries(subcategoriesLabels).map(([eng, rus]) => [rus, eng]),
-);
 
 export const RecipeTabs = ({ initialSubcategory, onSubcategoryChange }: RecipeTabsProps) => {
     const location = useLocation();
@@ -58,7 +56,7 @@ export const RecipeTabs = ({ initialSubcategory, onSubcategoryChange }: RecipeTa
 
             const engSubcategory = reverseSubcategoriesLabels[newSubcategory];
             if (engSubcategory) {
-                navigate(`/vegan-cuisine/${engSubcategory}`);
+                navigate(`/vegan-cuisine/${engSubcategory}`); // Обновляем URL с подкатегорией
             }
         },
         [veganSubcategories, navigate],
@@ -114,7 +112,6 @@ export const RecipeTabs = ({ initialSubcategory, onSubcategoryChange }: RecipeTa
                             w='auto'
                             h={{ base: '28px', lg: '42px' }}
                             flexShrink={0}
-                            transition='var(--chakra-transition-speed-fast)'
                         >
                             {subcat}
                         </Tab>

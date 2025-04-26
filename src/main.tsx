@@ -2,7 +2,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router';
 
-import { App } from './app/app';
+import { App } from './app/App';
 import { ScrollToTop } from './components/scroll-to-top';
 import { BestRecipesPage } from './pages/best-recipes-page/best-recipe-page';
 import { HomePage } from './pages/home-page/home-page';
@@ -16,16 +16,13 @@ export const Root = () => (
             <Routes>
                 <Route path='/' element={<App />}>
                     <Route index element={<HomePage />} handle={{ breadcrumb: 'Главная' }} />
+
                     <Route
-                        path='/vegan-cuisine/:subcategory'
+                        path='/vegan-cuisine/:subcategory*' // Этот путь будет обрабатывать как /vegan-cuisine, так и /vegan-cuisine/:subcategory
                         element={<VeganCuisinePage />}
-                        handle={{ breadcrumb: 'Веганская кухня' }}
+                        handle={{ breadcrumb: 'Веганская кухня', category: 'vegan' }}
                     />
-                    <Route
-                        path='/vegan-cuisine'
-                        element={<VeganCuisinePage />}
-                        handle={{ breadcrumb: 'Веганская кухня' }}
-                    />
+
                     <Route
                         path='best-recipes'
                         element={<BestRecipesPage />}

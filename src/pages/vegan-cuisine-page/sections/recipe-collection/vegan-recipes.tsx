@@ -12,6 +12,7 @@ import { Recipe } from '../../../../types/recipe-types';
 interface VeganRecipesProps {
     recipes: Recipe[];
     selectedSubcategory: string | null;
+    searchText: string; // <--- добавили
 }
 
 const formatSubcategory = (subcategory: string): string =>
@@ -22,31 +23,40 @@ const formatCategory = (category: string): string =>
 
 const normalize = (str: string) => str?.toLowerCase();
 
-export const VeganRecipes = ({ recipes, selectedSubcategory }: VeganRecipesProps) => {
+export const VeganRecipes = ({ recipes, selectedSubcategory, searchText }: VeganRecipesProps) => {
     console.log('All recipes:', recipes);
+
     const filteredRecipes = useMemo(() => {
-        if (!selectedSubcategory) return recipes;
+        let updatedRecipes = recipes;
 
-        const normalizedSelected = normalize(selectedSubcategory);
-        console.log('Selected Subcategory:', normalizedSelected);
+        if (selectedSubcategory) {
+            const normalizedSelected = normalize(selectedSubcategory);
 
-        return recipes.filter((recipe) => {
-            const subcategories = getSubcategoryList(recipe.subcategory);
-            const categories = getCategoryList(recipe.category);
+            updatedRecipes = updatedRecipes.filter((recipe) => {
+                const subcategories = getSubcategoryList(recipe.subcategory);
+                const categories = getCategoryList(recipe.category);
 
-            console.log('Checking recipe:', recipe.title);
+                const hasMatchingSubcategory = subcategories.some(
+                    (sub) => normalize(formatSubcategory(sub)) === normalizedSelected,
+                );
 
-            const hasMatchingSubcategory = subcategories.some(
-                (sub) => normalize(formatSubcategory(sub)) === normalizedSelected,
+                const hasMatchingCategory = categories.some(
+                    (cat) => normalize(formatCategory(cat)) === normalizedSelected,
+                );
+
+                return hasMatchingSubcategory || hasMatchingCategory;
+            });
+        }
+
+        if (searchText?.trim().length >= 3) {
+            const normalizedSearch = normalize(searchText);
+            updatedRecipes = updatedRecipes.filter((recipe) =>
+                normalize(recipe.title).includes(normalizedSearch),
             );
+        }
 
-            const hasMatchingCategory = categories.some(
-                (cat) => normalize(formatCategory(cat)) === normalizedSelected,
-            );
-
-            return hasMatchingSubcategory || hasMatchingCategory;
-        });
-    }, [recipes, selectedSubcategory]);
+        return updatedRecipes;
+    }, [recipes, selectedSubcategory, searchText]);
 
     const displayedRecipes = filteredRecipes.slice(0, 8);
 
@@ -76,10 +86,10 @@ export const VeganRecipes = ({ recipes, selectedSubcategory }: VeganRecipesProps
                 {displayedRecipes.map((recipe) => (
                     <Box key={`recipe-${recipe.id}`} maxW='100%' minW='0'>
                         <Box display={{ base: 'block', lg: 'none' }}>
-                            <BestCardSmall data={recipe} />
+                            <BestCardSmall data={recipe} searchText={searchText} />
                         </Box>
                         <Box display={{ base: 'none', lg: 'block' }}>
-                            <BestCard data={recipe} />
+                            <BestCard data={recipe} searchText={searchText} />
                         </Box>
                     </Box>
                 ))}

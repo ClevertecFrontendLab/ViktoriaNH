@@ -1,8 +1,15 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import { useParams } from 'react-router';
 
 import { RecipeDetailsCard } from '~/components/cards/recipe-details-card';
+import { NutritionInfo } from '~/components/recipe-card/nutrition-info';
+import { RecipeAuthorCard } from '~/components/recipe-card/recipe-author';
+import { RecipeIngredients } from '~/components/recipe-card/recipe-ingridients';
+import { RecipeSteps } from '~/components/recipe-card/recipe-steps';
+// import RecipeSteps from '~/components/recipe-card/recipe-steps';
 import { recipes } from '~/data/recipes';
+import { users } from '~/data/users';
+import { NewRecipeList } from '~/pages/home-page/sections/new-recipes/new-recipes-list/new-recipes-list';
 
 export const MainRecipeDetailsPage = () => {
     const { id } = useParams();
@@ -14,6 +21,7 @@ export const MainRecipeDetailsPage = () => {
     return (
         <Box
             as='main'
+            mt={{ base: 4, lg: 14 }}
             mx='auto'
             h='100%'
             w='100%'
@@ -32,6 +40,21 @@ export const MainRecipeDetailsPage = () => {
                 minW='0'
             >
                 <RecipeDetailsCard data={recipe} />
+                <NutritionInfo data={recipe} />
+                {recipe.ingredients && recipe.portions !== undefined ? (
+                    <RecipeIngredients
+                        ingredients={recipe.ingredients}
+                        basePortions={recipe.portions}
+                    />
+                ) : (
+                    <Text textAlign='center' color='gray.500'>
+                        Ингредиенты не указаны
+                    </Text>
+                )}
+                <RecipeSteps steps={recipe.steps} />
+                <RecipeAuthorCard data={users} />
+
+                <NewRecipeList />
 
                 <Box h={{ base: '56px' }} display={{ base: 'block', xl: 'none', lg: 'none' }}></Box>
             </Box>

@@ -1,6 +1,6 @@
 import { subcategoriesLabels } from '~/constants/subcategory-labels';
 
-const toKebabCase = (str: string) =>
+export const toKebabCase = (str: string) =>
     str
         .toLowerCase() // Преобразуем в нижний регистр
         .replace(/[\s_]+/g, '-') // Заменяем пробелы и подчеркивания на дефисы

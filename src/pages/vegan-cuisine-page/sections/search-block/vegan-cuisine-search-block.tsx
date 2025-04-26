@@ -2,7 +2,11 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 
 import { SearchIngredientsBlock } from '~/components/search-ingredients-block/search-ingredients-block';
 
-export const VeganCuisineSearchBlock = () => (
+interface VeganCuisineSearchBlockProps {
+    onSearch: (query: string) => void;
+}
+
+export const VeganCuisineSearchBlock = ({ onSearch }: VeganCuisineSearchBlockProps) => (
     <Box
         mx='auto'
         pt='32px'
@@ -41,6 +45,6 @@ export const VeganCuisineSearchBlock = () => (
             </Text>
         </Flex>
 
-        <SearchIngredientsBlock />
+        <SearchIngredientsBlock onSearch={onSearch} />
     </Box>
 );

@@ -54,7 +54,7 @@ export const MenuCategoryItem: React.FC<MenuCategoryItemProps> = ({
 
             {isActiveCategory && (
                 <AccordionPanel px={0} pt={2} pb={2}>
-                    <VStack spacing={1} align='stretch'>
+                    <VStack spacing={3} align='stretch'>
                         {item.text.map((subItem, subIndex) => {
                             const isActive =
                                 categoryIndex === activeCategoryIndex &&
@@ -66,7 +66,7 @@ export const MenuCategoryItem: React.FC<MenuCategoryItemProps> = ({
                                     alignItems='center'
                                     pl='52px'
                                     pr='8px'
-                                    h='36px'
+                                    h='auto'
                                     cursor='pointer'
                                     _hover={{ bg: 'lime.50' }}
                                     onClick={() => handleSubcategoryClick(categoryIndex, subIndex)} // Используем handleSubcategoryClick

@@ -1,7 +1,7 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 
 import { CardAvatar } from '../../../../../components/card-avatar/card-avatar';
-import { users } from '../../../../../data/users'; //
+import { users } from '../../../../../data/users';
 
 export const CulinaryBlogList = () => {
     const userList = [users.helen, users.alex, users.cate];

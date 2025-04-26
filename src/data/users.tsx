@@ -28,6 +28,12 @@ export const users = {
         src: cate,
         bg: 'white',
     },
+    serge: {
+        name: 'Сергей Разумов',
+        username: 'serge25',
+        src: '/public/icons/avatars/serge.webp',
+        bg: 'transparent',
+    },
 } as const;
 
 // Оптимизировать объекты cate и cateMain

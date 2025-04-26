@@ -59,6 +59,7 @@ export const NewRecipeCard: React.FC<NewRecipeCardProps> = ({ data, onClick }) =
             overflow='hidden'
             position='relative'
             variant='outline'
+            cursor='pointer'
         >
             {/* Картинка */}
             <Box position='relative' w='full'>

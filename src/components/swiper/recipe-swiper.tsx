@@ -50,15 +50,6 @@ export const RecipeSwiper = () => {
                     },
                 }}
             >
-                {/* {recipes.slice(0, 10).map((recipe) => (
-                    <SwiperSlide key={recipe.id}>
-                        <NewRecipeCard
-                            data={recipe}
-                            onClick={() => handleCardClick(recipe)}
-                           
-                        />
-                    </SwiperSlide> */}
-
                 {recipes
                     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) // Сортировка по дате в порядке убывания
                     .slice(0, 10) // Ограничение до 10 рецептов

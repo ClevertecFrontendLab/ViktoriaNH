@@ -19,6 +19,9 @@ export const theme = extendTheme({
             800: 'rgba(0, 0, 0, 0.80)',
             900: 'rgba(0, 0, 0, 0.92)',
         },
+        gray: {
+            700: '#2D3748',
+        },
         lime: {
             50: '#FFFFD3',
             100: '#EAFFC7',
@@ -114,11 +117,24 @@ export const theme = extendTheme({
             fontWeight: '400',
             lineHeight: '125%',
         },
+        mainTextBold: {
+            fontFamily: '"Inter", sans-serif',
+            fontSize: '14px',
+            fontWeight: '500',
+            lineHeight: '20px',
+        },
         buttonTitle: {
             fontFamily: '"Inter", sans-serif',
             fontSize: '14px',
             fontWeight: '600',
             lineHeight: '143%',
+        },
+        buttonRecipeCardTitle: {
+            fontFamily: '"Inter", sans-serif',
+            fontSize: '18px',
+            fontWeight: '600',
+            lineHeight: '155%',
+            color: 'blackAlpha.800',
         },
         menuItems: {
             fontFamily: '"Inter", sans-serif',
@@ -153,6 +169,25 @@ export const theme = extendTheme({
             lineHeight: { base: '133%', lg: '143%', xl: '143' },
             color: 'rgba(0, 0, 0, 0.64)',
         },
+        titleRecipeCard: {
+            fontFamily: '"Inter", sans-serif',
+            fontWeight: '700',
+            fontSize: { base: '24px', lg: '48px', xl: '48px' },
+            lineHeight: { base: '32px', lg: '48px', xl: '48px' },
+        },
+        nutritionValue: {
+            fontFamily: '"Inter", sans-serif',
+            fontWeight: '500',
+            fontSize: { sm: '24px', md: '36px' },
+            color: 'lime.800',
+            lineHeight: { sm: '32px', md: '40px' },
+        },
+        recipeAuthor: {
+            fontFamily: '"Inter", sans-serif',
+            fontWeight: { sm: '500', md: '700' },
+            fontSize: { sm: '18px', md: '24px' },
+            lineHeight: { sm: '28px', md: '32px' },
+        }, // Сергей Разумов
     },
 
     components: {
@@ -183,7 +218,7 @@ export const theme = extendTheme({
     styles: {
         global: {
             ':root': {
-                '--chakra-transition': 'all 0.2s ease-in-out',
+                '--chakra-transition': 'all 0.7s ease-in-out',
             },
         },
     }, //   используем таким образом transition="var(--chakra-transition)"

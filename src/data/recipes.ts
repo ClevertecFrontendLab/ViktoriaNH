@@ -346,86 +346,86 @@ export const recipes = [
         ],
     },
 
-    {
-        id: '9',
-        title: 'Пряная ветчина по итальянски',
-        description:
-            'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.',
-        image: '/images/recipes/ham.webp',
-        category: 'Вторые блюда',
-        subcategory: ['snacks', 'мясные', 'мясные закуски'],
-        bookmarks: 159,
-        likes: 257,
-        date: '2024-02-09T00:00:00Z',
-    },
+    // {
+    //     id: '9',
+    //     title: 'Пряная ветчина по итальянски',
+    //     description:
+    //         'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.',
+    //     image: '/images/recipes/ham.webp',
+    //     category: ['second-dish'],
+    //     subcategory: ['snacks', 'мясные', 'мясные закуски'],
+    //     bookmarks: 159,
+    //     likes: 257,
+    //     date: '2024-02-09T00:00:00Z',
+    // },
 
-    {
-        id: '10',
-        title: 'Том-ям с капустой кимчи',
-        description:
-            'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.',
-        image: '/images/recipes/tom-yum.webp',
-        category: 'Национальные',
-        subcategory: ['snacks', 'vegetables', 'side-dishes'],
-        bookmarks: 124,
-        date: '2024-03-09T00:00:00Z',
-    },
+    // {
+    //     id: '10',
+    //     title: 'Том-ям с капустой кимчи',
+    //     description:
+    //         'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.',
+    //     image: '/images/recipes/tom-yum.webp',
+    //     category: ['national'],
+    //     subcategory: ['snacks', 'vegetables', 'side-dishes'],
+    //     bookmarks: 124,
+    //     date: '2024-03-09T00:00:00Z',
+    // },
 
-    {
-        id: '11',
-        title: 'Кнели со спагетти',
-        description:
-            'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.',
-        image: '/images/recipes/spaghetti.webp',
-        category: 'Вторые блюда',
-        subcategory: ['snacks', 'мясные', 'side-dishes'],
-        bookmarks: 85,
-        likes: 152,
-        date: '2024-04-09T00:00:00Z',
-    },
+    // {
+    //     id: '11',
+    //     title: 'Кнели со спагетти',
+    //     description:
+    //         'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.',
+    //     image: '/images/recipes/spaghetti.webp',
+    //     category: ['second-dish'],
+    //     subcategory: ['snacks', 'side-dishes'],
+    //     bookmarks: 85,
+    //     likes: 152,
+    //     date: '2024-04-09T00:00:00Z',
+    // },
 
-    {
-        id: '12',
-        title: 'Солянка с грибами',
-        description:
-            'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.',
-        image: '/images/recipes/saltwart.webp',
-        category: 'Первые блюда',
-        subcategory: ['первые блюда', 'vegetables'],
-        bookmarks: 1,
-        date: '2024-05-09T00:00:00Z',
-    },
-    {
-        id: '13',
-        title: 'Оладьи на кефире "Пышные"',
-        description:
-            'Очень вкусные и нежные оладьи на кефире. Настоятельно рекомендую пышные кефирные оладьи на завтрак.',
-        image: '/images/recipes/pankakes.webp',
-        category: 'Десерты, выпечка',
-        subcategory: ['snacks', 'выпечка', 'теплые закуски', 'desserts'],
-        likes: 1,
-        date: '2024-07-09T00:00:00Z',
-    },
-    {
-        id: '14',
-        title: 'Салат "Здоровье"',
-        description:
-            'Сельдерей очень полезен для здоровья, пора набираться витаминов. Не салат, а сплошное удовольствие :) Вкусный, необычный, а главное быстрый.',
-        image: '/images/recipes/salad.webp',
-        category: 'Салаты',
-        subcategory: ['snacks', 'vegetables', 'сыроедческие блюда'],
-        likes: 1,
-        date: '2024-08-09T00:00:00Z',
-    },
-    {
-        id: '15',
-        title: 'Пури',
-        description:
-            'Пури - это индийские жареные лепешки, которые готовятся из пресного  теста. Рецепт лепешек пури требует самых доступных ингредиентов, и  времени на приготовление хрустящих лепешек уйдет мало.',
-        image: '/images/recipes/puri.webp',
-        category: ['national'],
-        subcategory: ['теплые закуски', 'закуски', 'выпечка'],
-        likes: 1,
-        date: '2022-08-09T00:00:00Z',
-    },
+    // {
+    //     id: '12',
+    //     title: 'Солянка с грибами',
+    //     description:
+    //         'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.',
+    //     image: '/images/recipes/saltwart.webp',
+    //     category: ['first-dish'],
+    //     subcategory: ['first-dish', 'vegetables'],
+    //     bookmarks: 1,
+    //     date: '2024-05-09T00:00:00Z',
+    // },
+    // {
+    //     id: '13',
+    //     title: 'Оладьи на кефире "Пышные"',
+    //     description:
+    //         'Очень вкусные и нежные оладьи на кефире. Настоятельно рекомендую пышные кефирные оладьи на завтрак.',
+    //     image: '/images/recipes/pankakes.webp',
+    //     category: ['desserts-baking', 'first-dish', 'second-dish' ],
+    //     subcategory: ['snacks', 'desserts'],
+    //     likes: 1,
+    //     date: '2024-07-09T00:00:00Z',
+    // },
+    // {
+    //     id: '14',
+    //     title: 'Салат "Здоровье"',
+    //     description:
+    //         'Сельдерей очень полезен для здоровья, пора набираться витаминов. Не салат, а сплошное удовольствие :) Вкусный, необычный, а главное быстрый.',
+    //     image: '/images/recipes/salad.webp',
+    //     category: ['salads'],
+    //     subcategory: ['snacks', 'vegetables', 'raw'],
+    //     likes: 1,
+    //     date: '2024-08-09T00:00:00Z',
+    // },
+    // {
+    //     id: '15',
+    //     title: 'Пури',
+    //     description:
+    //         'Пури - это индийские жареные лепешки, которые готовятся из пресного  теста. Рецепт лепешек пури требует самых доступных ингредиентов, и  времени на приготовление хрустящих лепешек уйдет мало.',
+    //     image: '/images/recipes/puri.webp',
+    //     category: ['national'],
+    //     subcategory: ['warm-snacks', 'bakery'],
+    //     likes: 1,
+    //     date: '2022-08-09T00:00:00Z',
+    // },
 ];

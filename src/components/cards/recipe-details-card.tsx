@@ -1,13 +1,14 @@
 import {
+    Badge,
     Box,
     Button,
     Card,
     CardBody,
     CardFooter,
     Heading,
-    HStack,
     Image,
     Text,
+    Wrap,
 } from '@chakra-ui/react';
 
 import { Recipe } from '~/types/recipe-types';
@@ -17,6 +18,8 @@ import { renderCategoryTags } from '~/utils/render-category-tags';
 import { BookmarkIcon } from '../icons/bookmark-icon';
 import { ClockIcon } from '../icons/clock-icon';
 import { LikeIcon } from '../icons/like-icon';
+// import { ClockIcon } from '../icons/clock-icon';
+// import { LikeIcon } from '../icons/like-icon';
 import { RecipeStats } from '../recipe-stats/recipe-stats';
 
 interface RecipeDetailsCardProps {
@@ -28,130 +31,158 @@ export const RecipeDetailsCard: React.FC<RecipeDetailsCardProps> = ({ data }) =>
 
     return (
         <Card
-            borderRadius='lg'
-            overflow='hidden'
-            maxW='668px'
-            h='244px'
-            direction='row'
-            variant='outline'
+            as='section'
+            maxW='100%'
+            h={{
+                sm: '584px',
+                // base: '584px',
+                md: '224px',
+                lg: '410px',
+                xl: '410px',
+            }}
+            direction={{ sm: 'column', md: 'row' }}
+            gap={3}
         >
-            <Image src={data.image} alt={data.title} objectFit='cover' w='346px' h='100%' />
+            <Image
+                src={data.image}
+                alt={data.title}
+                objectFit='cover'
+                w={{
+                    // base: '100%', // изображение на всю ширину на 360px
+                    // sm: '328px',
+                    md: '232px',
+                    lg: '353px',
+                    xl: '553px',
+                }}
+                h={{ sm: '224px', md: '100%' }}
+                borderRadius='lg'
+            />
 
             <Box
-                minW='322px'
+                minW={{ base: 'auto', sm: '322px' }}
                 w='100%'
                 display='flex'
                 flexDirection='column'
                 justifyContent='space-between'
-                px='24px'
-                py='20px'
+                px='15px'
+                py={{ base: '12px', sm: '0' }}
                 flex='1'
-                gap='24px'
+                gap='15px'
             >
-                <Box display='flex' justifyContent='space-between' w='100%'>
-                    <HStack spacing={2}>{renderCategoryTags(categoryList, 1, 'lime.50')}</HStack>
-
-                    <RecipeStats bookmarks={data.bookmarks} likes={data.likes} />
+                {/* Теги и статистика */}
+                <Box
+                    display='flex'
+                    justifyContent='space-between'
+                    w='100%'
+                    flexWrap='wrap'
+                    gap='10px'
+                >
+                    <Wrap spacing='4px' align='flex-start' flex='1' minW='0'>
+                        {renderCategoryTags(categoryList, 4, 'lime.50')}
+                    </Wrap>
+                    <Box alignSelf='center'>
+                        <RecipeStats bookmarks={data.bookmarks} likes={data.likes} />
+                    </Box>
                 </Box>
 
-                <CardBody p={0}>
-                    <Box w='100%' overflow='hidden'>
+                <CardBody p={0} overflow='hidden' flex='1' display='flex' flexDirection='column'>
+                    <Box overflowY='auto' pr='4px' h={{ sm: '150px', md: '100%' }}>
                         <Heading
-                            as='h2'
-                            fontFamily='"Inter", sans-serif'
-                            fontSize='20px'
-                            fontWeight='500'
-                            lineHeight='140%'
+                            as='h1'
+                            fontWeight='700'
+                            fontSize={{ base: '24px', lg: '36px', xl: '48px' }}
+                            lineHeight={{ base: '32px', lg: '48px', xl: '48px' }}
                             mb={2}
-                            overflow='hidden'
-                            textOverflow='ellipsis'
-                            whiteSpace='nowrap'
+                            whiteSpace='normal'
+                            wordBreak='break-word'
                         >
                             {data.title}
                         </Heading>
+
+                        <Text textStyle='mainText' whiteSpace='normal' wordBreak='break-word'>
+                            {data.description}
+                        </Text>
                     </Box>
-                    <Text
-                        textStyle='mainText'
-                        style={{
-                            display: '-webkit-box',
-                            WebkitBoxOrient: 'vertical',
-                            overflow: 'hidden',
-                            WebkitLineClamp: 3,
-                            maxWidth: '100%',
-                            whiteSpace: 'normal',
-                        }}
-                    >
-                        {data.description}
-                    </Text>
                 </CardBody>
 
                 <CardFooter
-                    maxW={{ xl: '274px', lg: 'none' }}
                     w='100%'
                     p={0}
-                    gap={2}
                     display='flex'
-                    justifyContent='end'
+                    flexDirection={{ sm: 'column', md: 'row' }}
+                    gap='12px'
+                    justifyContent='space-between'
                 >
-                    <Button
-                        sx={{
-                            display: 'flex',
-                            gap: '8px',
-                            borderRadius: '4px',
-                            padding: '2px 8px',
-                            maxW: '104px',
-                            height: '24px',
-                            background: 'blackAlpha.100',
-                        }}
+                    <Badge
+                        w='fit-content'
+                        px='8px'
+                        py={{ sm: '4px', md: '2px', lg: '2px' }}
+                        background='blackAlpha.100'
+                        borderRadius='4px'
+                        display='flex'
+                        alignItems='center'
+                        gap='6px'
                     >
-                        <Box display='flex' alignItems='center' justifyContent='center'>
-                            <ClockIcon boxSize='16px' />
-                        </Box>
-                        <Text textStyle='buttonTitle'>{data.time || 'Не указано'}</Text>
-                    </Button>
+                        <ClockIcon boxSize='16px' />
+                        <Text fontSize='14px' lineHeight='1.2' m='0' textStyle='buttonTitle'>
+                            {data.time || 'Не указано'}
+                        </Text>
+                    </Badge>
 
-                    <Button
-                        sx={{
-                            display: 'flex',
-                            gap: '8px',
-                            border: '1px solid rgba(0, 0, 0, 0.48)',
-                            borderRadius: '6px',
-                            padding: '0px 12px',
-                            width: '122px',
-                            height: '32px',
-                            color: 'rgba(0, 0, 0, 0.8)',
-                            background: 'transparent',
-                        }}
+                    <Box
+                        display='flex'
+                        gap={3}
+                        flexDirection={{ base: 'column', sm: 'row' }}
+                        w={{ base: '100%', sm: 'auto' }}
                     >
-                        <Box display='flex' alignItems='center' justifyContent='center'>
-                            <LikeIcon boxSize='14px' />
-                        </Box>
-                        <Text textStyle='buttonTitle'>Оценить рецепт</Text>
-                    </Button>
+                        <Button
+                            h='auto'
+                            minH='unset'
+                            px={{ base: '5px', xl: '14px' }}
+                            py={{ base: '4px', lg: '10px' }}
+                            background='transparent'
+                            border='1px solid rgba(0, 0, 0, 0.48)'
+                            borderRadius='6px'
+                            display='flex'
+                            alignItems='center'
+                            gap='6px'
+                            w={{ base: '100%', sm: 'auto' }}
+                        >
+                            <LikeIcon boxSize={{ base: '12px', lg: '14px', xl: '16px' }} />
+                            <Text
+                                fontSize={{ base: '12px', lg: '14px', xl: '16px' }}
+                                lineHeight='1.2'
+                                m='0'
+                                color='blackAlpha.800'
+                            >
+                                Оценить рецепт
+                            </Text>
+                        </Button>
 
-                    <Button
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            gap: '8px',
-                            border: '1px solid rgba(0, 0, 0, 0.08)',
-                            borderRadius: '6px',
-                            padding: '0px 12px',
-                            width: '87px',
-                            height: '32px',
-                            backgroundColor: 'lime.400',
-                            color: 'white',
-                            fontSize: '14px',
-                            fontWeight: '600',
-                            lineHeight: '143%',
-                        }}
-                    >
-                        <Box display='flex' alignItems='center' justifyContent='center'>
-                            <BookmarkIcon boxSize='14px' />
-                        </Box>
-                        <Text textStyle='buttonTitle'>Сохранить в закладки</Text>
-                    </Button>
+                        <Button
+                            h='auto'
+                            minH='unset'
+                            px={{ base: '5px', xl: '14px' }}
+                            py={{ base: '4px', lg: '10px' }}
+                            backgroundColor='lime.400'
+                            border='1px solid rgba(0, 0, 0, 0.08)'
+                            borderRadius='6px'
+                            display='flex'
+                            alignItems='center'
+                            gap='6px'
+                            w={{ base: '100%', sm: 'auto' }}
+                        >
+                            <BookmarkIcon boxSize={{ base: '12px', lg: '14px', xl: '16px' }} />
+                            <Text
+                                fontSize={{ base: '12px', lg: '14px', xl: '16px' }}
+                                lineHeight='1.2'
+                                m='0'
+                                color='black'
+                            >
+                                Сохранить в закладки
+                            </Text>
+                        </Button>
+                    </Box>
                 </CardFooter>
             </Box>
         </Card>
