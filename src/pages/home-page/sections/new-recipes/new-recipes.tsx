@@ -8,7 +8,7 @@ export const NewRecipes = () => {
     if (isDesktop === undefined) return null;
 
     return (
-        <Box as='section' h='auto' visibility='visible'>
+        <Box as='section' h='auto' overflow='visible'>
             {isDesktop ? <NewRecipeList /> : <NewRecipeList />}
         </Box>
     );

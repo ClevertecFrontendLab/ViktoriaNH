@@ -32,7 +32,7 @@ export const RecipeSwiper: React.FC<RecipeSwiperProps> = ({
     };
 
     return (
-        <Box w='full' visibility='visible' position='relative' className={className}>
+        <Box w='full' overflow='visible' position='relative' className={className}>
             <Swiper
                 data-test-id={testId}
                 modules={[Navigation, Mousewheel, Keyboard]}

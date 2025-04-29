@@ -32,7 +32,12 @@ export const Breadcrumbs = () => {
     };
 
     return (
-        <Box gap='8px' width='100%' data-test-id='breadcrumbs'>
+        <Box
+            gap='8px'
+            width='100%'
+            data-test-id='breadcrumbs'
+            sx={{ display: 'flex', flexWrap: 'wrap' }}
+        >
             <Breadcrumb
                 fontSize='16px'
                 spacing='4px'

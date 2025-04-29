@@ -12,6 +12,11 @@ interface HeaderProps {
     toggleMenu: () => void;
 }
 
+interface HeaderProps {
+    isMenuOpen: boolean;
+    toggleMenu: () => void;
+}
+
 export const Header: React.FC<HeaderProps> = ({ isMenuOpen, toggleMenu }) => (
     <Box
         data-test-id='header'
@@ -23,17 +28,16 @@ export const Header: React.FC<HeaderProps> = ({ isMenuOpen, toggleMenu }) => (
         justifyContent='space-between'
         alignItems='center'
         w='100vw'
-        // zIndex={999}
     >
-        {/* Логотип и хлебные крошки */}
+        {/* Лого + хлебные крошки */}
         <Box display='inline-flex' alignItems='center' gap={32}>
             <Logo />
-            <Box display={{ lg: 'flex', base: 'none' }} textStyle='h6'>
+            <Box textStyle='h6'>
                 <Breadcrumbs />
             </Box>
         </Box>
 
-        {/* Прочие элементы */}
+        {/* Справа: карточка профиля на десктопе */}
         <Box mr='56px' display={{ lg: 'flex', base: 'none' }}>
             <CardAvatar
                 name={users.cate.name}
@@ -43,25 +47,17 @@ export const Header: React.FC<HeaderProps> = ({ isMenuOpen, toggleMenu }) => (
             />
         </Box>
 
-        {/* Бургер-меню на мобильных устройствах */}
-        <Box
-            display={{
-                base: 'flex', // Показывается на мобильных устройствах
-                lg: 'none', // Скрывается на больших экранах
-            }}
-            alignItems='center'
-            justifyContent='space-between'
-            marginRight={{ base: '16px', md: '20px' }}
-        >
+        {/* Справа: профиль на мобильных */}
+        <Box display={{ base: 'flex', lg: 'none' }} alignItems='center' gap={4} mr='16px'>
             <ProfileDataHeader
                 name={users.cate.name}
                 username={users.cateMain.username}
                 src={users.cateMain.src}
                 bg={users.cateMain.bg}
             />
-            <Box>
-                <BurgerMenu isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
-            </Box>
         </Box>
+
+        {/* Мобильное меню — всегда в DOM */}
+        <BurgerMenu isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
     </Box>
 );

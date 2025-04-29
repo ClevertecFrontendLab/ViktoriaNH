@@ -18,7 +18,7 @@ export const Root = () => (
                     <Route index element={<HomePage />} handle={{ breadcrumb: 'Главная' }} />
 
                     <Route
-                        path='/vegan/:subcategory/' // Исправленный путь
+                        path='vegan/:subcategory/' // Исправленный путь
                         element={<VeganCuisinePage />}
                         handle={{ breadcrumb: 'Веганская кухня', category: 'vegan' }}
                     />
@@ -30,7 +30,7 @@ export const Root = () => (
                     />
 
                     {/* Динамический путь для страницы рецепта */}
-                    <Route path='/:category/:subcategory/:id' element={<RecipeDetailsPage />} />
+                    <Route path=':category/:subcategory/:id' element={<RecipeDetailsPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>

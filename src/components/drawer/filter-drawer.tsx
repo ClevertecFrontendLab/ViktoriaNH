@@ -359,5 +359,3 @@ export const DrawerFilters = ({ isOpen, onClose, onApplyFilters }: DrawerFilters
         </Drawer>
     );
 };
-
-// из чата последняя версия до того, как мы начали работать над аллергенами

@@ -14,21 +14,36 @@ interface SearchIngredientsBlockProps {
     onResetFilters: () => void;
 }
 
+interface SearchIngredientsBlockProps {
+    onSearch: (query: string) => void;
+    searchText?: string;
+    setSearchText?: (text: string) => void;
+    onApplyFilters: (filters: { [key: string]: string | number | boolean }) => void; // Типизация с несколькими возможными значениями
+}
+
 export const SearchIngredientsBlock: React.FC<SearchIngredientsBlockProps> = ({
     onSearch,
     searchText,
     setSearchText,
     onApplyFilters,
 }) => {
-    const [localSearchText, setLocalSearchText] = useState('');
-    const [isSearchActive, setIsSearchActive] = useState(false);
+    // drawer
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const openDrawer = () => setIsDrawerOpen(true);
+    const closeDrawer = () => setIsDrawerOpen(false);
 
-    // контролирование текста
+    // локальный стейт для поиска, если внешний не передан
+    const [localSearchText, setLocalSearchText] = useState('');
     const inputValue = searchText ?? localSearchText;
     const setInputValue = setSearchText ?? setLocalSearchText;
 
-    // поиск
+    // активность кнопки поиска
+    const [isSearchActive, setIsSearchActive] = useState(false);
+    useEffect(() => {
+        setIsSearchActive(inputValue.trim().length >= 3);
+    }, [inputValue]);
+
+    // действия поиска
     const handleSearch = () => {
         if (!isSearchActive) return;
         onSearch(inputValue.trim());
@@ -38,7 +53,7 @@ export const SearchIngredientsBlock: React.FC<SearchIngredientsBlockProps> = ({
         onSearch('');
     };
 
-    // ввод
+    // ввод в инпут
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
     };
@@ -46,27 +61,21 @@ export const SearchIngredientsBlock: React.FC<SearchIngredientsBlockProps> = ({
         if (e.key === 'Enter') handleSearch();
     };
 
-    // активность
-    useEffect(() => {
-        setIsSearchActive(inputValue.trim().length >= 3);
-    }, [inputValue]);
-
-    // закрыть Drawer
-    const closeDrawer = () => setIsDrawerOpen(false);
-
     return (
         <>
-            {/* 1) Рендерим Drawer отдельно, чтобы он не перекрывал инпут */}
-            <DrawerFilters
-                isOpen={isDrawerOpen}
-                onClose={closeDrawer}
-                onApplyFilters={(filters) => {
-                    onApplyFilters(filters);
-                    closeDrawer();
-                }}
-            />
+            {/* DrawerFilters монтируется только когда открыт */}
+            {isDrawerOpen && (
+                <DrawerFilters
+                    isOpen={isDrawerOpen}
+                    onClose={closeDrawer}
+                    onApplyFilters={(filters) => {
+                        onApplyFilters(filters);
+                        closeDrawer();
+                    }}
+                />
+            )}
 
-            {/* 2) Сам блок поиска */}
+            {/* Блок поиска и фильтра */}
             <Flex direction='column' alignItems='center' width='100%'>
                 <Flex
                     w={{ sm: '328px', md: '448px', lg: '518px', xl: '518px' }}
@@ -92,10 +101,10 @@ export const SearchIngredientsBlock: React.FC<SearchIngredientsBlockProps> = ({
                         w='48px'
                         h='48px'
                         borderColor='blackAlpha.600'
-                        onClick={() => setIsDrawerOpen(true)}
+                        onClick={openDrawer}
                     />
 
-                    {/* Группа ввода */}
+                    {/* Инпут поиска */}
                     <InputGroup w='full' position='relative' zIndex={1}>
                         <Input
                             data-test-id='search-input'
@@ -131,7 +140,7 @@ export const SearchIngredientsBlock: React.FC<SearchIngredientsBlockProps> = ({
                             gap='15px'
                             right='8px'
                         >
-                            {inputValue.trim().length >= 3 && (
+                            {isSearchActive && (
                                 <IconButton
                                     aria-label='Очистить поиск'
                                     icon={<CloseIcon boxSize={3} />}
@@ -150,7 +159,7 @@ export const SearchIngredientsBlock: React.FC<SearchIngredientsBlockProps> = ({
                                 variant='ghost'
                                 size='sm'
                                 onClick={handleSearch}
-                                cursor={isSearchActive ? 'pointer' : 'none'}
+                                cursor={isSearchActive ? 'pointer' : 'not-allowed'}
                                 pointerEvents={isSearchActive ? 'auto' : 'none'}
                                 opacity={isSearchActive ? 1 : 0.4}
                                 _hover={{ background: 'transparent' }}
@@ -161,7 +170,7 @@ export const SearchIngredientsBlock: React.FC<SearchIngredientsBlockProps> = ({
                     </InputGroup>
                 </Flex>
 
-                {/* Фильтр аллергенов — без изменений */}
+                {/* Фильтр аллергенов */}
                 <Flex w='518px' alignItems='center' gap='16px' mt='16px'>
                     <AllergenFilter />
                 </Flex>

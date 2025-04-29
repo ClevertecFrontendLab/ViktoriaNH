@@ -32,7 +32,7 @@ export const AllergenFilter: React.FC = () => {
                 h='36px'
                 pl='8px'
                 py='6px'
-                data-test-id='allergens-switcher-filter' // Обертка для одного data-test-id
+                data-test-id='allergens-switcher'
             >
                 <Text fontSize='16px'>Исключить мои аллергены</Text>
                 <Switch
@@ -40,7 +40,7 @@ export const AllergenFilter: React.FC = () => {
                     colorScheme='green'
                     isChecked={isAllergenFilterActive}
                     onChange={handleSwitchChange}
-                    data-test-id='allergens-switcher' // Сам переключатель
+                    data-test-id='allergens-switcher-filter'
                 />
             </Flex>
 

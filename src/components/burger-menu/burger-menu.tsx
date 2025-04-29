@@ -12,35 +12,35 @@ interface BurgerMenuProps {
 }
 
 export const BurgerMenu: React.FC<BurgerMenuProps> = ({ isMenuOpen, toggleMenu }) => {
-    const displayMobile = useBreakpointValue({ base: 'inline-flex', lg: 'none' }); // лучше чем useIsMobile
+    const displayMobile = useBreakpointValue({ base: 'inline-flex', lg: 'none' });
 
     return (
         <>
-            {/* Кнопка открытия/закрытия меню */}
-            {isMenuOpen ? (
-                <IconButton
-                    icon={<CloseIcon />}
-                    data-test-id='close-icon'
-                    aria-label='Закрыть меню'
-                    variant='ghost'
-                    onClick={toggleMenu}
-                    display={displayMobile}
-                />
-            ) : (
-                <IconButton
-                    icon={<HamburgerIcon />}
-                    data-test-id='hamburger-icon'
-                    aria-label='Открыть меню'
-                    variant='ghost'
-                    onClick={toggleMenu}
-                    display={displayMobile}
-                />
-            )}
+            {/* Бургер-кнопка — всегда в DOM, просто скрыта на десктопе */}
+            <IconButton
+                icon={<HamburgerIcon />}
+                aria-label='Открыть меню'
+                data-test-id='hamburger-icon'
+                variant='ghost'
+                onClick={toggleMenu}
+                display={isMenuOpen ? 'none' : displayMobile}
+            />
 
-            {/* Модальное меню */}
+            {/* Кнопка закрытия меню */}
+            <IconButton
+                icon={<CloseIcon />}
+                aria-label='Закрыть меню'
+                data-test-id='close-icon'
+                variant='ghost'
+                onClick={toggleMenu}
+                display={isMenuOpen ? displayMobile : 'none'}
+            />
+
+            {/* Навигационное меню — в DOM только при открытии */}
             {isMenuOpen && (
                 <Box
                     data-test-id='nav'
+                    display='flex'
                     position='fixed'
                     top='80px'
                     right='0'
@@ -49,36 +49,16 @@ export const BurgerMenu: React.FC<BurgerMenuProps> = ({ isMenuOpen, toggleMenu }
                     bg='white'
                     boxShadow='2xl'
                     zIndex={998}
-                    display='flex'
                     flexDirection='column'
                     pt='16px'
                     pl='16px'
                     pb='32px'
                 >
-                    <Box
-                        color='blackAlpha.800'
-                        textStyle='h6'
-                        p='10px 20px'
-                        gap='8px'
-                        w='100%'
-                        display='block'
-                    >
+                    <Box color='blackAlpha.800' textStyle='h6' p='10px 20px' w='100%'>
                         <Breadcrumbs />
                     </Box>
 
-                    <Box
-                        display='flex'
-                        flexDirection='column'
-                        position='fixed'
-                        width='344px'
-                        top='80px'
-                        right='0'
-                        bg='white'
-                        h='calc(100vh - 80px)'
-                        zIndex={998}
-                        pt='16px'
-                        pb='102px'
-                    >
+                    <Box flex='1' overflowY='auto'>
                         <MenuAccordion menuItems={menuItems} />
                     </Box>
 
@@ -93,14 +73,16 @@ export const BurgerMenu: React.FC<BurgerMenuProps> = ({ isMenuOpen, toggleMenu }
                 </Box>
             )}
 
-            {/* Оверлей */}
+            {/* Оверлей — также только при открытом меню */}
             {isMenuOpen && (
                 <Box
+                    data-test-id='menu-overlay'
+                    display='block'
                     position='fixed'
                     top='80px'
                     left='0'
-                    width='100%'
-                    height='calc(100vh - 80px)'
+                    w='100%'
+                    h='calc(100vh - 80px)'
                     bg='rgba(0, 0, 0, 0.4)'
                     zIndex={997}
                     onClick={toggleMenu}
