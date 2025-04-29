@@ -1,17 +1,17 @@
 import { Box, Button, Card, CardBody, Image, Text } from '@chakra-ui/react';
 
-import { menuItems } from '../../../../../data/menu-items';
+import { Recipe } from '~/data/recipes';
+import { getCategoryIcon } from '~/utils/get-category-icon';
 
-export interface VeganCuisineBlockProps {
-    data: {
-        id: number;
-        title: string;
-        category: string;
-    };
+interface VeganCuisineBlockProps {
+    data: Recipe;
 }
 
 export const VeganCuisineBlock = ({ data }: VeganCuisineBlockProps) => {
-    const currentCategory = menuItems.find((item) => item.title === data.category);
+    // Получаем иконку и перевод категории через getRecipeIcon
+    const { icon, title } = getCategoryIcon(
+        Array.isArray(data.category) ? data.category[0] : data.category,
+    );
 
     return (
         <Card
@@ -24,10 +24,12 @@ export const VeganCuisineBlock = ({ data }: VeganCuisineBlockProps) => {
             p={{ base: '14px 12px', lg: '12px', xl: '14px 24px' }}
             h={{ sm: '52px', md: '48px', lg: '52px', xl: '57.3px' }}
         >
-            <CardBody display='flex' alignItems='end' p={0}>
+            <CardBody display='flex' alignItems='center' p={0}>
                 <Box display='flex' alignItems='center' w='100%' mt='-7px' minW={0}>
                     <Box display='flex' alignItems='center' gap='8px' flex='1 1 auto' minW={0}>
-                        <Image src={currentCategory?.icon} boxSize='24px' alt={data.category} />
+                        {/* Иконка для категории */}
+                        {icon && <Image src={icon} boxSize='24px' alt={title} />}
+                        {/* Название рецепта */}
                         <Text
                             fontWeight='500'
                             fontSize={{ base: '16px', lg: '18px', xl: '20px' }}
@@ -42,6 +44,7 @@ export const VeganCuisineBlock = ({ data }: VeganCuisineBlockProps) => {
                         </Text>
                     </Box>
 
+                    {/* Кнопка "Готовить" */}
                     <Button
                         h='32px'
                         flexShrink={0}
@@ -54,7 +57,6 @@ export const VeganCuisineBlock = ({ data }: VeganCuisineBlockProps) => {
                         lineHeight={{ base: '133%', lg: '143%', xl: '143%' }}
                         color='lime.600'
                     >
-                        {' '}
                         Готовить
                     </Button>
                 </Box>

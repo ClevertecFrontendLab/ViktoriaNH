@@ -6,6 +6,7 @@ import { VeganCuisineList } from '~/pages/home-page/sections/vegan-cuisine/vegan
 
 export const MainContentBestRecipesPage = () => (
     <Box
+        as='main'
         mx='auto'
         h='100%'
         w='100%'

@@ -4,75 +4,81 @@ import { Footer } from '~/components/footer/footer';
 import { Header } from '~/components/header/header';
 import { Navigation } from '~/components/navigation/navigation';
 import { Sidebar } from '~/components/sidebar/sidebar';
+import { useBurgerMenu } from '~/hooks/use-burger-menu';
 import { MainContentBestRecipesPage } from '~/layouts/main-content/main-best-recipes-page';
 
-export const BestRecipesPage = () => (
-    <Box w='100vw' overflowX='auto'>
-        <Box
-            position='fixed'
-            top='0'
-            left='50%'
-            transform='translateX(-50%)'
-            w='100%'
-            maxW='1920px'
-            zIndex='999'
-        >
-            <Header />
-        </Box>
+export const BestRecipesPage = () => {
+    const { isMenuOpen, toggleMenu } = useBurgerMenu();
 
-        <Box w='100%' maxW='1920px' mx='auto'>
-            <Grid
-                templateColumns={{
-                    base: '1fr',
-                    lg: '256px 24px 1fr 280px',
-                }}
-                gap={0}
-                minH='100vh'
+    return (
+        <Box w='100vw' overflowX='auto'>
+            <Box
+                position='fixed'
+                top='0'
+                left='50%'
+                transform='translateX(-50%)'
+                // w='100%'
+                // maxW='1920px'
+                w='100vw'
+                zIndex='999'
             >
-                <GridItem
-                    display={{ base: 'none', lg: 'block' }}
-                    rowStart={1}
-                    colStart={1}
-                    w='256px'
-                >
-                    <Navigation />
-                </GridItem>
+                <Header isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+            </Box>
 
-                <GridItem colStart={{ base: 1, lg: 3 }} rowStart={1} minW={0}>
-                    <Box
-                        w='100%'
-                        maxW={{
-                            base: '100%',
-                            lg: '100%',
-                        }}
-                        px={{ base: '0px', lg: '0px' }}
+            <Box w='100%' maxW='1920px' mx='auto'>
+                <Grid
+                    templateColumns={{
+                        base: '1fr',
+                        lg: '256px 24px 1fr 280px',
+                    }}
+                    gap={0}
+                    minH='100vh'
+                >
+                    <GridItem
+                        display={{ base: 'none', lg: 'block' }}
+                        rowStart={1}
+                        colStart={1}
+                        w='256px'
                     >
-                        <MainContentBestRecipesPage />
-                    </Box>
-                </GridItem>
+                        <Navigation isMenuOpen={isMenuOpen} />
+                    </GridItem>
 
-                <GridItem
-                    display={{ base: 'none', lg: 'block' }}
-                    rowStart={1}
-                    colStart={4}
-                    w='280px'
-                >
-                    <Sidebar />
-                </GridItem>
-            </Grid>
-        </Box>
+                    <GridItem colStart={{ base: 1, lg: 3 }} rowStart={1} minW={0}>
+                        <Box
+                            w='100%'
+                            maxW={{
+                                base: '100%',
+                                lg: '100%',
+                            }}
+                            px={{ base: '0px', lg: '0px' }}
+                        >
+                            <MainContentBestRecipesPage />
+                        </Box>
+                    </GridItem>
 
-        <Box
-            position='fixed'
-            bottom='0'
-            left='50%'
-            transform='translateX(-50%)'
-            w='100%'
-            maxW='1920px'
-            zIndex='999'
-            display={{ base: 'flex', lg: 'none', xl: 'none' }}
-        >
-            <Footer />
+                    <GridItem
+                        display={{ base: 'none', lg: 'block' }}
+                        rowStart={1}
+                        colStart={4}
+                        w='280px'
+                    >
+                        <Sidebar />
+                    </GridItem>
+                </Grid>
+            </Box>
+
+            <Box
+                position='fixed'
+                bottom='0'
+                left='50%'
+                transform='translateX(-50%)'
+                w='100%'
+                maxW='1920px'
+                zIndex='999'
+                display={{ base: 'flex', lg: 'none', xl: 'none' }}
+            >
+                <Footer />
+            </Box>
         </Box>
-    </Box>
-);
+    );
+};

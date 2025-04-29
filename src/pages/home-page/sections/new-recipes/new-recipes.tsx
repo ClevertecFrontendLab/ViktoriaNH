@@ -1,47 +1,15 @@
-import { Box, Text } from '@chakra-ui/react';
+import { Box, useBreakpointValue } from '@chakra-ui/react';
 
-import { NewRecipeSmallList } from './new-recipes-list/new-recipe-small-list';
-import { RecipeList } from './new-recipes-list/new-recipes-list';
+import { NewRecipeList } from './new-recipes-list/new-recipes-list';
 
-export const NewRecipes = () => (
-    <Box as='section' h='auto'>
-        <Text
-            as='h2'
-            mb={{ base: 3, lg: 6 }}
-            fontSize={{
-                base: '24px',
-                lg: '36px',
-                xl: '48px',
-            }}
-            fontWeight={{ base: '500', lg: '500' }}
-            fontFamily='Inter, sans-serif'
-            lineHeight={{
-                base: '133%',
-                lg: '111%',
-                xl: '100%',
-            }}
-            textStyle={{
-                base: 'body',
-                xl: 'h2',
-            }}
-        >
-            Новые рецепты
-        </Text>
+export const NewRecipes = () => {
+    const isDesktop = useBreakpointValue({ base: false, lg: true });
 
-        <Box
-            sx={{
-                display: { base: 'none', lg: 'flex' },
-            }}
-        >
-            <RecipeList />
+    if (isDesktop === undefined) return null;
+
+    return (
+        <Box as='section' h='auto' overflow='visible'>
+            {isDesktop ? <NewRecipeList /> : <NewRecipeList />}
         </Box>
-
-        <Box
-            sx={{
-                display: { base: 'flex', lg: 'none' },
-            }}
-        >
-            <NewRecipeSmallList />
-        </Box>
-    </Box>
-);
+    );
+};

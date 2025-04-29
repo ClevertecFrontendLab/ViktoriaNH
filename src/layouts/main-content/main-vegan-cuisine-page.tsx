@@ -1,51 +1,77 @@
 import { Box } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 
-import { RecipeTabs } from '~/components/tabs/recipe-tabs';
-import { DessertsList } from '~/pages/vegan-cuisine-page/sections/vegan-cuisine/desserts/desserts-list';
-import { VeganRecipes } from '~/pages/vegan-cuisine-page/sections/vegan-cuisine/recipe-collection/vegan-recipes';
-import { VeganCuisineSearchBlock } from '~/pages/vegan-cuisine-page/sections/vegan-cuisine/search-block/vegan-cuisine-search-block';
+import { subcategoriesLabels } from '~/constants/subcategory-labels';
+import { recipes } from '~/data/recipes';
+import { useFilteredVeganRecipes } from '~/hooks/use-filtred-vegan-recipes';
+import { useRecipeSearch } from '~/hooks/use-recipe-search';
+import { DessertsList } from '~/pages/vegan-cuisine-page/sections/desserts/desserts-list';
+import { VeganRecipes } from '~/pages/vegan-cuisine-page/sections/recipe-collection/vegan-recipes';
+import { VeganCuisineSearchBlock } from '~/pages/vegan-cuisine-page/sections/search-block/vegan-cuisine-search-block';
 
-export const MainContentVeganCuisinePage = () => (
-    <Box
-        mx='auto'
-        h='100%'
-        w='100%'
-        maxW={{ base: '100%', lg: '100%', xl: '1360px' }}
-        px={{ base: 4, md: 6, lg: 0 }}
-    >
+import { RecipeTabs } from '../../components/tabs/recipe-tabs';
+
+export const MainContentVeganCuisinePage = () => {
+    const { subcategory } = useParams<{ subcategory?: string }>();
+    const slugToRussian = (s?: string) =>
+        s && subcategoriesLabels[s] ? subcategoriesLabels[s] : null;
+    const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(
+        slugToRussian(subcategory),
+    );
+
+    useEffect(() => {
+        setSelectedSubcategory(slugToRussian(subcategory));
+    }, [subcategory]);
+
+    // 4. Слушаем изменения URL и синхронизируем стейт
+    useEffect(() => {
+        setSelectedSubcategory(slugToRussian(subcategory));
+    }, [subcategory]);
+
+    // 5. Берём все веганские рецепты
+    const veganRecipes = useFilteredVeganRecipes(recipes);
+
+    // 6. Навешиваем поиск на уже отфильтрованный список
+    const {
+        searchText,
+        filteredRecipes: searchedRecipes,
+        handleSearch,
+    } = useRecipeSearch(veganRecipes);
+
+    return (
         <Box
+            as='main'
             display='flex'
             flexDirection='column'
             mt='80px'
             flex='1'
+            maxW={{ base: '100%', lg: '100%', xl: '1360px' }}
+            px={{ base: 4, md: 6, lg: 0 }}
             mx='auto'
-            w='100%'
-            maxW='1360px'
-            minW='0'
         >
-            <Box mb={{ base: '32px', lg: '0px', xl: '0px' }}>
-                <VeganCuisineSearchBlock />
-            </Box>
+            {/* Поисковый блок */}
+            <VeganCuisineSearchBlock onSearch={handleSearch} />
 
-            <Box
-                display='flex'
-                flexDirection='column'
-                alignItems='center'
-                alignSelf='stretch'
-                paddingBottom='12px'
-                mb='12px'
-            >
-                <RecipeTabs />
-            </Box>
-            <Box w='100%' mb='40px'>
-                <VeganRecipes />
-            </Box>
+            {/* Табы подкатегорий */}
+            <RecipeTabs
+                recipes={veganRecipes}
+                initialSubcategory={selectedSubcategory}
+                onSubcategoryChange={setSelectedSubcategory}
+            />
 
-            <Box w='100%'>
-                <DessertsList />
-            </Box>
+            {/* Секция с карточками */}
+            <VeganRecipes
+                recipes={searchedRecipes}
+                selectedSubcategory={selectedSubcategory}
+                searchText={searchText}
+            />
 
-            <Box h={{ base: '102px' }} display={{ base: 'block', xl: 'none', lg: 'none' }}></Box>
+            {/* Дополнительный список десертов */}
+            <DessertsList />
+
+            {/* Отступ внизу для мобильных */}
+            <Box h={{ base: '102px' }} display={{ base: 'block', xl: 'none', lg: 'none' }} />
         </Box>
-    </Box>
-);
+    );
+};
