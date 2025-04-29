@@ -27,29 +27,15 @@ export const BestCardList: React.FC<BestCardListProps> = ({ limit = 2 }) => (
         }}
         width='100%'
     >
-        {recipes.slice(0, limit).map((recipe) => (
-            <Box
-                key={recipe.id}
-                display={{
-                    base: 'block',
-                    md: 'block',
-                    lg: 'none',
-                }}
-            >
-                <BestCardSmall data={recipe} />
-            </Box>
-        ))}
+        {recipes.slice(0, limit).map((recipe, index) => (
+            <Box key={recipe.id} data-test-id={`card-link-${index}`}>
+                <Box display={{ base: 'block', lg: 'none' }}>
+                    <BestCardSmall data={recipe} />
+                </Box>
 
-        {recipes.slice(0, limit).map((recipe) => (
-            <Box
-                key={recipe.id}
-                display={{
-                    base: 'none',
-                    md: 'none',
-                    lg: 'block',
-                }}
-            >
-                <BestCard data={recipe} />
+                <Box display={{ base: 'none', lg: 'block' }}>
+                    <BestCard data={recipe} />
+                </Box>
             </Box>
         ))}
     </Box>

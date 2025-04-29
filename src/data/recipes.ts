@@ -1,43 +1,6 @@
 export const recipes = [
     {
         id: '0',
-        title: 'Лапша с курицей и шафраном',
-        description: 'Ароматная лапша с курицей и шафраном, идеальное сочетание для сытного обеда.',
-        category: ['second-dish'],
-        subcategory: ['poultry-dish', 'snacks'],
-        image: '/images/recipes/spaghetti.webp',
-        bookmarks: 258,
-        likes: 1342,
-        date: '2024-03-08T00:00:00Z',
-        time: '40 минут',
-        portions: 4,
-        nutritionValue: { calories: 400, proteins: 30, fats: 15, carbohydrates: 50 },
-        ingredients: [
-            { title: 'лапша', count: '200', measureUnit: 'г' },
-            { title: 'курица', count: '300', measureUnit: 'г' },
-            { title: 'шафран', count: '1', measureUnit: 'ч. л.' },
-            { title: 'лук', count: '1', measureUnit: 'шт.' },
-        ],
-        steps: [
-            {
-                stepNumber: 1,
-                description: 'Отварить лапшу.',
-                image: 'url',
-            },
-            {
-                stepNumber: 2,
-                description: 'Обжарить курицу с луком и шафраном.',
-                image: 'url',
-            },
-            {
-                stepNumber: 3,
-                description: 'Смешать лапшу с курицей и подавать.',
-                image: 'url',
-            },
-        ],
-    },
-    {
-        id: '1',
         title: 'Картошка, тушенная с болгарским перцем и фасолью в томатном соусе',
         description:
             'Картошка, тушенная с болгарским перцем, фасолью, морковью и луком, - вариант сытного блюда на каждый день. Фасоль в данном случае заменяет мясо, делая рагу сытным и питательным. Чтобы сократить время приготовления, возьмём консервированную фасоль. Блюдо хоть и простое, но в полной мере наполнено ароматами и имеет выразительный вкус за счёт добавления томатной пасты.',
@@ -84,7 +47,7 @@ export const recipes = [
         side: 'potatoes',
     },
     {
-        id: '2',
+        id: '1',
         title: 'Картофельные рулетики с грибами',
         description:
             'Рекомендую всем приготовить постное блюдо из картофеля и грибов. Готовится это блюдо без яиц, без мяса и без сыра, из самых простых ингредиентов, а получается очень вкусно и сытно. Постный рецепт картофельных рулетиков с грибами, в томатном соусе, - на обед, ужин и даже на праздничный стол!',
@@ -122,8 +85,9 @@ export const recipes = [
         ],
         side: 'potatoes',
     },
+
     {
-        id: '3',
+        id: '2',
         title: 'Овощная лазанья из лаваша',
         description:
             'Большое, сытное блюдо для ценителей блюд без мяса! Такая лазанья готовится с овощным соусом и соусом бешамель, а вместо листов для лазаньи используется тонкий лаваш.',
@@ -160,8 +124,9 @@ export const recipes = [
             },
         ],
     },
+
     {
-        id: '4',
+        id: '3',
         title: 'Тефтели из булгура и чечевицы, запечённые в томатном соусе',
         description:
             'Тефтели из булгура и чечевицы – яркие и питательные, отлично подходят для постного и вегетарианского меню. Тефтели получаются нежными, а также сочными и ароматными благодаря использованию томатного соуса и душистых пряностей.',
@@ -198,8 +163,9 @@ export const recipes = [
             },
         ],
     },
+
     {
-        id: '5',
+        id: '4',
         title: 'Чесночная картошка',
         description:
             'Такая картошечка украсит любой семейный обед! Все будут в полном восторге, очень вкусно! Аромат чеснока, хрустящая корочка на картошечке - просто объедение! Отличная идея для обеда или ужина, готовится просто!',
@@ -239,7 +205,7 @@ export const recipes = [
     },
 
     {
-        id: '6',
+        id: '5',
         title: 'Капустные котлеты',
         description:
             'Капустные котлеты по этому рецепту получаются необычайно пышными и невероятно вкусными. Мягкий вкус и лёгкая пряная нотка наверняка помогут сделать эти чудесные котлеты из капусты одним из ваших любимых овощных блюд.',
@@ -275,8 +241,9 @@ export const recipes = [
             },
         ],
     },
+
     {
-        id: '7',
+        id: '6',
         title: 'Овощное рагу',
         description: 'Сытное рагу из сезонных овощей, приправленное травами.',
         category: ['vegan', 'second-dish'],
@@ -315,6 +282,44 @@ export const recipes = [
     },
 
     {
+        id: '7',
+        title: 'Лапша с курицей и шафраном',
+        description: 'Ароматная лапша с курицей и шафраном, идеальное сочетание для сытного обеда.',
+        category: ['second-dish'],
+        subcategory: ['poultry-dish'],
+        image: '/images/recipes/spaghetti.webp',
+        bookmarks: 258,
+        likes: 1342,
+        date: '2024-03-08T00:00:00Z',
+        time: '40 минут',
+        portions: 4,
+        nutritionValue: { calories: 400, proteins: 30, fats: 15, carbohydrates: 50 },
+        ingredients: [
+            { title: 'лапша', count: '200', measureUnit: 'г' },
+            { title: 'курица', count: '300', measureUnit: 'г' },
+            { title: 'шафран', count: '1', measureUnit: 'ч. л.' },
+            { title: 'лук', count: '1', measureUnit: 'шт.' },
+        ],
+        steps: [
+            {
+                stepNumber: 1,
+                description: 'Отварить лапшу.',
+                image: 'url',
+            },
+            {
+                stepNumber: 2,
+                description: 'Обжарить курицу с луком и шафраном.',
+                image: 'url',
+            },
+            {
+                stepNumber: 3,
+                description: 'Смешать лапшу с курицей и подавать.',
+                image: 'url',
+            },
+        ],
+    },
+
+    {
         id: '8',
         title: 'Гриль-салат с овощами',
         description: 'Салат с обжаренными на гриле овощами и легкой заправкой.',
@@ -346,43 +351,124 @@ export const recipes = [
         ],
     },
 
-    // {
-    //     id: '9',
-    //     title: 'Пряная ветчина по итальянски',
-    //     description:
-    //         'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.',
-    //     image: '/images/recipes/ham.webp',
-    //     category: ['second-dish'],
-    //     subcategory: ['snacks', 'мясные', 'мясные закуски'],
-    //     bookmarks: 159,
-    //     likes: 257,
-    //     date: '2024-02-09T00:00:00Z',
-    // },
+    {
+        id: '9',
+        title: 'Пряная ветчина по итальянски',
+        description:
+            'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.',
+        image: '/images/recipes/ham.webp',
+        category: ['second-dish'],
+        subcategory: ['snacks', 'мясные', 'мясные закуски'],
+        bookmarks: 159,
+        likes: 257,
+        date: '2024-02-20T00:00:00Z',
+        time: '30 минут',
+        portions: 2,
+        nutritionValue: { calories: 180, proteins: 4, fats: 6, carbohydrates: 28 },
+        ingredients: [
+            { title: 'картошка', count: '3', measureUnit: 'шт.' },
+            { title: 'грибы', count: '200', measureUnit: 'г' },
+            { title: 'мука', count: '100', measureUnit: 'г' },
+            { title: 'специи', count: '0', measureUnit: 'по вкусу' },
+        ],
+        steps: [
+            {
+                stepNumber: 1,
+                description: 'Отварить картошку и сделать пюре.',
+                image: 'url',
+            },
+            {
+                stepNumber: 2,
+                description: 'Обжарить грибы до готовности.',
+                image: 'url',
+            },
+            {
+                stepNumber: 3,
+                description: 'Сформировать рулетики и обжарить.',
+                image: 'url',
+            },
+        ],
+        side: 'potatoes',
+    },
 
-    // {
-    //     id: '10',
-    //     title: 'Том-ям с капустой кимчи',
-    //     description:
-    //         'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.',
-    //     image: '/images/recipes/tom-yum.webp',
-    //     category: ['national'],
-    //     subcategory: ['snacks', 'vegetables', 'side-dishes'],
-    //     bookmarks: 124,
-    //     date: '2024-03-09T00:00:00Z',
-    // },
+    {
+        id: '10',
+        title: 'Том-ям с капустой кимчи',
+        description:
+            'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.',
+        image: '/images/recipes/tom-yum.webp',
+        category: ['national'],
+        subcategory: ['snacks', 'vegetables', 'side-dishes'],
+        bookmarks: 124,
+        date: '2024-02-20T00:00:00Z',
+        time: '30 минут',
+        portions: 2,
+        nutritionValue: { calories: 180, proteins: 4, fats: 6, carbohydrates: 28 },
+        ingredients: [
+            { title: 'картошка', count: '3', measureUnit: 'шт.' },
+            { title: 'грибы', count: '200', measureUnit: 'г' },
+            { title: 'мука', count: '100', measureUnit: 'г' },
+            { title: 'специи', count: '0', measureUnit: 'по вкусу' },
+        ],
+        steps: [
+            {
+                stepNumber: 1,
+                description: 'Отварить картошку и сделать пюре.',
+                image: 'url',
+            },
+            {
+                stepNumber: 2,
+                description: 'Обжарить грибы до готовности.',
+                image: 'url',
+            },
+            {
+                stepNumber: 3,
+                description: 'Сформировать рулетики и обжарить.',
+                image: 'url',
+            },
+        ],
+        side: 'potatoes',
+    },
 
-    // {
-    //     id: '11',
-    //     title: 'Кнели со спагетти',
-    //     description:
-    //         'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.',
-    //     image: '/images/recipes/spaghetti.webp',
-    //     category: ['second-dish'],
-    //     subcategory: ['snacks', 'side-dishes'],
-    //     bookmarks: 85,
-    //     likes: 152,
-    //     date: '2024-04-09T00:00:00Z',
-    // },
+    {
+        id: '11',
+        title: 'Кнели со спагетти',
+        description:
+            'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.',
+        image: '/images/recipes/spaghetti.webp',
+        category: ['second-dish'],
+        subcategory: ['snacks', 'side-dishes'],
+        bookmarks: 85,
+        likes: 152,
+        date: '2024-02-20T00:00:00Z',
+        time: '30 минут',
+        portions: 2,
+        nutritionValue: { calories: 180, proteins: 4, fats: 6, carbohydrates: 28 },
+        ingredients: [
+            { title: 'картошка', count: '3', measureUnit: 'шт.' },
+            { title: 'грибы', count: '200', measureUnit: 'г' },
+            { title: 'мука', count: '100', measureUnit: 'г' },
+            { title: 'специи', count: '0', measureUnit: 'по вкусу' },
+        ],
+        steps: [
+            {
+                stepNumber: 1,
+                description: 'Отварить картошку и сделать пюре.',
+                image: 'url',
+            },
+            {
+                stepNumber: 2,
+                description: 'Обжарить грибы до готовности.',
+                image: 'url',
+            },
+            {
+                stepNumber: 3,
+                description: 'Сформировать рулетики и обжарить.',
+                image: 'url',
+            },
+        ],
+        side: 'potatoes',
+    },
 
     // {
     //     id: '12',
@@ -401,7 +487,7 @@ export const recipes = [
     //     description:
     //         'Очень вкусные и нежные оладьи на кефире. Настоятельно рекомендую пышные кефирные оладьи на завтрак.',
     //     image: '/images/recipes/pankakes.webp',
-    //     category: ['desserts-baking', 'first-dish', 'second-dish' ],
+    //     category: ['desserts-baking', 'first-dish', 'second-dish'],
     //     subcategory: ['snacks', 'desserts'],
     //     likes: 1,
     //     date: '2024-07-09T00:00:00Z',

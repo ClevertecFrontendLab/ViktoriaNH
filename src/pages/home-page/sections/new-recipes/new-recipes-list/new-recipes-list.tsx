@@ -1,8 +1,6 @@
 import { Box, Text } from '@chakra-ui/react';
 
 import { RecipeSwiper } from '~/components/swiper/recipe-swiper';
-import { SwiperNavigationNext } from '~/components/swiper/swiper-navigation/arrow-navigation-next';
-import { SwiperNavigationPrev } from '~/components/swiper/swiper-navigation/swiper-navigation-prev';
 
 export const NewRecipeList: React.FC = () => {
     const headingStyles = {
@@ -13,15 +11,11 @@ export const NewRecipeList: React.FC = () => {
         textStyle: { base: 'body', xl: 'h2' },
     };
     return (
-        <Box maxW='1360px' position='relative' overflow='hidden' flexWrap='nowrap'>
+        <Box maxW='1360px' position='relative' flexWrap='nowrap' overflow='visible'>
             <Text as='h2' {...headingStyles}>
                 Новые рецепты
             </Text>
-            <RecipeSwiper />
-            <>
-                <SwiperNavigationPrev />
-                <SwiperNavigationNext />
-            </>
+            <RecipeSwiper data-test-id='carousel' />
         </Box>
     );
 };

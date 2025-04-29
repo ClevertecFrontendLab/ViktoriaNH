@@ -1,13 +1,7 @@
 import { Box, Tab, TabList, Tabs } from '@chakra-ui/react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router';
 
-import { subcategoriesLabels } from '~/constants/subcategory-labels';
-import { menuItems } from '~/data/menu-items';
+import { useRecipeTabFilter } from '~/hooks/use-recipe-tab-filter';
 import { Recipe } from '~/types/recipe-types';
-import { createDictionary } from '~/utils/create-dictionary';
-
-const reverseSubcategoriesLabels = createDictionary(subcategoriesLabels);
 
 interface RecipeTabsProps {
     recipes: Recipe[];
@@ -16,50 +10,9 @@ interface RecipeTabsProps {
 }
 
 export const RecipeTabs = ({ initialSubcategory, onSubcategoryChange }: RecipeTabsProps) => {
-    const location = useLocation();
-    const navigate = useNavigate();
-
-    const veganSubcategories = useMemo(() => {
-        const item = menuItems.find((item) => item.title === 'Веганская кухня');
-        return item ? item.text : [];
-    }, []);
-
-    const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(() => {
-        if (initialSubcategory && veganSubcategories.includes(initialSubcategory)) {
-            return initialSubcategory;
-        }
-        return veganSubcategories[0] || null;
-    });
-
-    // Устанавливаем активную подкатегорию из URL
-    useEffect(() => {
-        const pathParts = location.pathname.split('/');
-        const subcategoryFromUrl = pathParts[pathParts.length - 1];
-
-        if (subcategoryFromUrl) {
-            const russianTitle = subcategoriesLabels[subcategoryFromUrl];
-            if (russianTitle && veganSubcategories.includes(russianTitle)) {
-                setSelectedSubcategory(russianTitle);
-            }
-        }
-    }, [location.pathname, veganSubcategories]);
-
-    // Обновляем родительский компонент при смене подкатегории
-    useEffect(() => {
-        onSubcategoryChange(selectedSubcategory);
-    }, [selectedSubcategory, onSubcategoryChange]);
-
-    const handleTabChange = useCallback(
-        (index: number) => {
-            const newSubcategory = veganSubcategories[index];
-            setSelectedSubcategory(newSubcategory);
-
-            const engSubcategory = reverseSubcategoriesLabels[newSubcategory];
-            if (engSubcategory) {
-                navigate(`/vegan-cuisine/${engSubcategory}`); // Обновляем URL с подкатегорией
-            }
-        },
-        [veganSubcategories, navigate],
+    const { selectedSubcategory, handleTabChange, veganSubcategories } = useRecipeTabFilter(
+        initialSubcategory,
+        onSubcategoryChange,
     );
 
     return (
@@ -72,6 +25,8 @@ export const RecipeTabs = ({ initialSubcategory, onSubcategoryChange }: RecipeTa
             mb={6}
             overflowX='auto'
         >
+            {/* Преобразуем название подкатегории для data-test-id */}
+
             <Tabs
                 variant='unstyled'
                 isLazy
@@ -89,9 +44,10 @@ export const RecipeTabs = ({ initialSubcategory, onSubcategoryChange }: RecipeTa
                     borderBottom='1px solid'
                     borderColor='blackAlpha.200'
                 >
-                    {veganSubcategories.map((subcat) => (
+                    {veganSubcategories.map((subcat, i) => (
                         <Tab
                             key={subcat}
+                            data-test-id={`tab-${subcat.toLowerCase()}-${i}`}
                             px={{ base: '16px', lg: '16px' }}
                             py={{ base: '4px', lg: '8px' }}
                             fontSize={{ base: '14px', lg: '16px', xl: '16px' }}

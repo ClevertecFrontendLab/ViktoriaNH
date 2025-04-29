@@ -18,7 +18,7 @@ export const Root = () => (
                     <Route index element={<HomePage />} handle={{ breadcrumb: 'Главная' }} />
 
                     <Route
-                        path='/vegan-cuisine/:subcategory*' // Этот путь будет обрабатывать как /vegan-cuisine, так и /vegan-cuisine/:subcategory
+                        path='/vegan/:subcategory/' // Исправленный путь
                         element={<VeganCuisinePage />}
                         handle={{ breadcrumb: 'Веганская кухня', category: 'vegan' }}
                     />

@@ -2,14 +2,24 @@ import 'swiper/css';
 
 import { Box } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
-import { Navigation } from 'swiper/modules';
+import { Keyboard, Mousewheel, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { recipes } from '~/data/recipes';
 import { NewRecipeCard } from '~/pages/home-page/sections/new-recipes/new-recipes-list/components/new-recipe-card';
 import { Recipe } from '~/types/recipe-types';
 
-export const RecipeSwiper = () => {
+import { SwiperNavigation } from './swiper-navigation/swiper-navigation';
+
+interface RecipeSwiperProps {
+    className?: string;
+    'data-test-id'?: string;
+}
+
+export const RecipeSwiper: React.FC<RecipeSwiperProps> = ({
+    className,
+    'data-test-id': testId = 'carousel',
+}) => {
     const navigate = useNavigate();
 
     const handleCardClick = (recipe: Recipe) => {
@@ -18,30 +28,38 @@ export const RecipeSwiper = () => {
             ? recipe.subcategory[0]
             : recipe.subcategory;
         const path = `/${category}/${subcategory}/${recipe.id}`;
-
         navigate(path);
     };
 
     return (
-        <Box w='full'>
+        <Box w='full' visibility='visible' position='relative' className={className}>
             <Swiper
-                modules={[Navigation]}
-                loop={true}
+                data-test-id={testId}
+                modules={[Navigation, Mousewheel, Keyboard]}
+                loop={false}
                 navigation={{
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
+                    nextEl: '.carousel-forward',
+                    prevEl: '.carousel-back',
                 }}
+                touchEventsTarget='container'
+                simulateTouch
+                touchStartPreventDefault={false}
+                touchMoveStopPropagation={false}
+                touchRatio={1}
+                touchAngle={45}
+                allowTouchMove
+                resistance
                 breakpoints={{
                     360: {
                         slidesPerView: 2,
                         spaceBetween: 12,
                     },
                     768: {
-                        slidesPerView: 4.3,
+                        slidesPerView: 2.5,
                         spaceBetween: 12,
                     },
                     1440: {
-                        slidesPerView: 3.1,
+                        slidesPerView: 4,
                         spaceBetween: 12,
                     },
                     1920: {
@@ -50,15 +68,16 @@ export const RecipeSwiper = () => {
                     },
                 }}
             >
-                {recipes
-                    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) // Сортировка по дате в порядке убывания
-                    .slice(0, 10) // Ограничение до 10 рецептов
-                    .map((recipe) => (
-                        <SwiperSlide key={recipe.id}>
+                {recipes.slice(0, 10).map((recipe, index) => (
+                    <SwiperSlide key={recipe.id}>
+                        <Box data-test-id={`carousel-card-${index}`}>
                             <NewRecipeCard data={recipe} onClick={() => handleCardClick(recipe)} />
-                        </SwiperSlide>
-                    ))}
+                        </Box>
+                    </SwiperSlide>
+                ))}
             </Swiper>
+
+            <SwiperNavigation />
         </Box>
     );
 };

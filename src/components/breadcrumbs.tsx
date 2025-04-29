@@ -14,8 +14,7 @@ export const Breadcrumbs = () => {
 
     // Функция для получения правильной категории
     const getCategoryLabel = (key: string) => {
-        // Если категория 'vegan-cuisine', возвращаем "Веганская кухня"
-        if (key === 'vegan-cuisine') {
+        if (key === 'vegan') {
             return 'Веганская кухня';
         }
         // Для остальных категорий возвращаем стандартное имя
@@ -33,7 +32,7 @@ export const Breadcrumbs = () => {
     };
 
     return (
-        <Box gap='8px' width='100%'>
+        <Box gap='8px' width='100%' data-test-id='breadcrumbs'>
             <Breadcrumb
                 fontSize='16px'
                 spacing='4px'
@@ -78,7 +77,7 @@ export const Breadcrumbs = () => {
 
                 {/* Рецепт */}
                 {recipe && (
-                    <BreadcrumbItem isCurrentPage>
+                    <BreadcrumbItem isCurrentPage data-test-id='breadcrumbs'>
                         <BreadcrumbLink color='black'>{recipe.title}</BreadcrumbLink>
                     </BreadcrumbItem>
                 )}

@@ -1,63 +1,43 @@
 import { Box } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 import { subcategoriesLabels } from '~/constants/subcategory-labels';
-import { menuItems } from '~/data/menu-items';
 import { recipes } from '~/data/recipes';
+import { useFilteredVeganRecipes } from '~/hooks/use-filtred-vegan-recipes';
+import { useRecipeSearch } from '~/hooks/use-recipe-search';
 import { DessertsList } from '~/pages/vegan-cuisine-page/sections/desserts/desserts-list';
 import { VeganRecipes } from '~/pages/vegan-cuisine-page/sections/recipe-collection/vegan-recipes';
 import { VeganCuisineSearchBlock } from '~/pages/vegan-cuisine-page/sections/search-block/vegan-cuisine-search-block';
-import { Recipe } from '~/types/recipe-types';
-import { getCategoryList, getSubcategoryList } from '~/utils/normilize';
 
 import { RecipeTabs } from '../../components/tabs/recipe-tabs';
 
-const normalize = (str: string) => str?.toLowerCase();
-
-const formatSubcategory = (subcategory: string): string =>
-    subcategoriesLabels[subcategory.toLowerCase()] || subcategory;
-
 export const MainContentVeganCuisinePage = () => {
     const { subcategory } = useParams<{ subcategory?: string }>();
-
-    const veganSubcategories =
-        menuItems.find((item) => item.title === 'Веганская кухня')?.text.map(normalize) ?? [];
-
-    const veganRecipes = recipes.filter((recipe) => {
-        const categories = getCategoryList(recipe.category);
-        const subcategories = getSubcategoryList(recipe.subcategory);
-
-        const isExplicitlyVegan = categories.includes('vegan');
-        const hasVeganSubcategory = subcategories.some((subcat) =>
-            veganSubcategories.includes(normalize(formatSubcategory(subcat))),
-        );
-
-        return isExplicitlyVegan || hasVeganSubcategory;
-    });
-
+    const slugToRussian = (s?: string) =>
+        s && subcategoriesLabels[s] ? subcategoriesLabels[s] : null;
     const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(
-        subcategory ?? null,
+        slugToRussian(subcategory),
     );
-    const [searchText, setSearchText] = useState('');
 
-    const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>(veganRecipes);
+    useEffect(() => {
+        setSelectedSubcategory(slugToRussian(subcategory));
+    }, [subcategory]);
 
-    const handleSearch = (query: string) => {
-        const lowerCaseQuery = query.trim().toLowerCase();
+    // 4. Слушаем изменения URL и синхронизируем стейт
+    useEffect(() => {
+        setSelectedSubcategory(slugToRussian(subcategory));
+    }, [subcategory]);
 
-        // Если строка поиска пуста, показываем все рецепты по текущей категории/подкатегории
-        if (lowerCaseQuery === '') {
-            setFilteredRecipes(veganRecipes); // Показываем все рецепты по выбранной категории/подкатегории
-        } else {
-            // Если текст в поиске есть, фильтруем по названию
-            const filteredByName = veganRecipes.filter((recipe) =>
-                recipe.title.toLowerCase().includes(lowerCaseQuery),
-            );
-            setFilteredRecipes(filteredByName);
-        }
-        setSearchText(query); // Обновляем строку поиска
-    };
+    // 5. Берём все веганские рецепты
+    const veganRecipes = useFilteredVeganRecipes(recipes);
+
+    // 6. Навешиваем поиск на уже отфильтрованный список
+    const {
+        searchText,
+        filteredRecipes: searchedRecipes,
+        handleSearch,
+    } = useRecipeSearch(veganRecipes);
 
     return (
         <Box
@@ -70,22 +50,27 @@ export const MainContentVeganCuisinePage = () => {
             px={{ base: 4, md: 6, lg: 0 }}
             mx='auto'
         >
+            {/* Поисковый блок */}
             <VeganCuisineSearchBlock onSearch={handleSearch} />
 
+            {/* Табы подкатегорий */}
             <RecipeTabs
-                recipes={filteredRecipes} // Используем отфильтрованные рецепты
+                recipes={veganRecipes}
                 initialSubcategory={selectedSubcategory}
                 onSubcategoryChange={setSelectedSubcategory}
             />
 
+            {/* Секция с карточками */}
             <VeganRecipes
-                recipes={filteredRecipes} // Используем отфильтрованные рецепты
+                recipes={searchedRecipes}
                 selectedSubcategory={selectedSubcategory}
                 searchText={searchText}
             />
 
+            {/* Дополнительный список десертов */}
             <DessertsList />
 
+            {/* Отступ внизу для мобильных */}
             <Box h={{ base: '102px' }} display={{ base: 'block', xl: 'none', lg: 'none' }} />
         </Box>
     );

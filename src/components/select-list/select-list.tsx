@@ -1,37 +1,43 @@
-import { ChevronDownIcon } from '@chakra-ui/icons';
-import {
-    Box,
-    Input,
-    InputGroup,
-    InputLeftElement,
-    InputRightElement,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuList,
-} from '@chakra-ui/react';
+import { useSelectList } from '~/hooks/use-select-list';
 
-export const SelectList = () => (
-    <Box zIndex={999}>
-        <Menu>
-            <MenuButton as={InputGroup} w='234px'>
-                <InputLeftElement pointerEvents='none'></InputLeftElement>
+import { SelectAllergens } from './select-allergens';
 
-                <Input
-                    placeholder='Выберите из списка...'
-                    _placeholder={{ color: 'blackAlpha.700', fontSize: 'xs' }}
-                />
+export interface SelectListProps {
+    allergens: string[];
+    selectedAllergens: string[];
+    handleSelectAllergen: (value: (string | number)[]) => void;
+    isFilterActive: boolean;
+    newAllergen: string;
+    setNewAllergen: (value: string) => void;
+    handleAddCustomAllergen: () => void;
+}
 
-                <InputRightElement>
-                    <ChevronDownIcon />
-                </InputRightElement>
-            </MenuButton>
+export const SelectList: React.FC<SelectListProps> = ({
+    allergens,
+    selectedAllergens,
+    handleSelectAllergen,
+    isFilterActive,
+    newAllergen,
+    setNewAllergen,
+    handleAddCustomAllergen,
+}) => {
+    const { isMenuOpen, toggleMenu, handleKeyPress } = useSelectList(isFilterActive);
 
-            <MenuList>
-                <MenuItem>Что-то 1</MenuItem>
-                <MenuItem>Что-то 2</MenuItem>
-                <MenuItem>Что-то 3</MenuItem>
-            </MenuList>
-        </Menu>
-    </Box>
-);
+    const wrappedKeyPress = (e: React.KeyboardEvent) =>
+        handleKeyPress(e, newAllergen, handleAddCustomAllergen);
+
+    return (
+        <SelectAllergens
+            isMenuOpen={isMenuOpen}
+            toggleMenu={toggleMenu}
+            allergens={allergens}
+            selectedAllergens={selectedAllergens}
+            handleSelectAllergen={handleSelectAllergen}
+            isFilterActive={isFilterActive}
+            newAllergen={newAllergen}
+            setNewAllergen={setNewAllergen}
+            handleAddCustomAllergen={handleAddCustomAllergen}
+            handleKeyPress={wrappedKeyPress}
+        />
+    );
+};

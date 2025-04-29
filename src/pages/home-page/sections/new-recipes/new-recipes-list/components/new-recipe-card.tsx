@@ -56,7 +56,7 @@ export const NewRecipeCard: React.FC<NewRecipeCardProps> = ({ data, onClick }) =
             flexDirection='column'
             alignItems='flex-start'
             alignSelf='stretch'
-            overflow='hidden'
+            // overflow='hidden'
             position='relative'
             variant='outline'
             cursor='pointer'
@@ -69,7 +69,7 @@ export const NewRecipeCard: React.FC<NewRecipeCardProps> = ({ data, onClick }) =
                     h={{ base: '128px', lg: '230px' }}
                     maxW={{ base: '158px', lg: '322px' }}
                     objectFit='cover'
-                    loading='lazy'
+                    // loading='lazy'
                 />
 
                 {/* Теги на изображении */}

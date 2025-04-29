@@ -20,4 +20,5 @@ export const categoryLabels: Record<string, string> = {
     'healthy-food': 'Лечебное питание',
     sauces: 'Соусы',
     preserves: 'Заготовки',
+    'best-recipes': 'Самое сочное',
 };

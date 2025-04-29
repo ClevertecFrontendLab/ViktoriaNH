@@ -4,10 +4,11 @@ import { Footer } from '~/components/footer/footer';
 import { Header } from '~/components/header/header';
 import { Navigation } from '~/components/navigation/navigation';
 import { Sidebar } from '~/components/sidebar/sidebar';
+import { recipes } from '~/data/recipes';
 import { useBurgerMenu } from '~/hooks/use-burger-menu';
 import { MainContent } from '~/layouts/main-content/main-home-page';
 
-export const headerHeight = 80;
+// export const headerHeight = 80;
 
 export const HomePage = () => {
     const { isMenuOpen, toggleMenu } = useBurgerMenu();
@@ -15,7 +16,8 @@ export const HomePage = () => {
     return (
         <Box w='100vw' maxW='1920px' mx='auto'>
             <Box
-                position='fixed'
+                // position='fixed'
+
                 top='0'
                 left='0'
                 width='100%' // Хедер растягиваем на всю ширину
@@ -53,7 +55,7 @@ export const HomePage = () => {
                             }}
                             px={{ base: '0px', lg: '0px' }}
                         >
-                            <MainContent />
+                            <MainContent recipes={recipes} />
                         </Box>
                     </GridItem>
 

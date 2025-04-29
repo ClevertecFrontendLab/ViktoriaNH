@@ -44,10 +44,7 @@ export const VeganCuisinePage = () => {
                     <GridItem colStart={{ base: 1, lg: 3 }} rowStart={1} minW={0}>
                         <Box
                             w='100%'
-                            maxW={{
-                                base: '100%',
-                                lg: '100%',
-                            }}
+                            maxW={{ base: '100%', lg: '100%' }}
                             px={{ base: '0px', lg: '0px' }}
                         >
                             <MainContentVeganCuisinePage />

@@ -23,7 +23,7 @@ export const Header: React.FC<HeaderProps> = ({ isMenuOpen, toggleMenu }) => (
         justifyContent='space-between'
         alignItems='center'
         w='100vw'
-        zIndex={999}
+        // zIndex={999}
     >
         {/* Логотип и хлебные крошки */}
         <Box display='inline-flex' alignItems='center' gap={32}>
@@ -46,8 +46,8 @@ export const Header: React.FC<HeaderProps> = ({ isMenuOpen, toggleMenu }) => (
         {/* Бургер-меню на мобильных устройствах */}
         <Box
             display={{
-                base: 'flex',
-                lg: 'none',
+                base: 'flex', // Показывается на мобильных устройствах
+                lg: 'none', // Скрывается на больших экранах
             }}
             alignItems='center'
             justifyContent='space-between'

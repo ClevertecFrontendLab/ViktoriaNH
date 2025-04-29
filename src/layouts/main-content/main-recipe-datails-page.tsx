@@ -6,7 +6,6 @@ import { NutritionInfo } from '~/components/recipe-card/nutrition-info';
 import { RecipeAuthorCard } from '~/components/recipe-card/recipe-author';
 import { RecipeIngredients } from '~/components/recipe-card/recipe-ingridients';
 import { RecipeSteps } from '~/components/recipe-card/recipe-steps';
-// import RecipeSteps from '~/components/recipe-card/recipe-steps';
 import { recipes } from '~/data/recipes';
 import { users } from '~/data/users';
 import { NewRecipeList } from '~/pages/home-page/sections/new-recipes/new-recipes-list/new-recipes-list';

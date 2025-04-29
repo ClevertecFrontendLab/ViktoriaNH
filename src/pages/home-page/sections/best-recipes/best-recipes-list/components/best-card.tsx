@@ -398,9 +398,16 @@ export const BestCard: React.FC<RecipeCardProps> = ({ data, searchText }) => {
                         <Text textStyle='buttonTitle'>Сохранить</Text>
                     </Button>
                     <Button
-                        onClick={() =>
-                            navigate(`/${data.category[0]}/${data.subcategory[0]}/${data.id}`)
-                        }
+                        onClick={() => {
+                            const category = data.category[0];
+                            const subcategory = data.subcategory[0];
+                            const id = data.id;
+
+                            // Проверяем, что если категория 'vegan', то строим путь для страницы рецепта
+                            navigate(
+                                `/${category === 'vegan' ? 'vegan' : category}/${subcategory}/${id}`,
+                            );
+                        }}
                         sx={{
                             display: 'flex',
                             justifyContent: 'center',
